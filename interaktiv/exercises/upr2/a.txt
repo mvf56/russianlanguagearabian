@@ -1,0 +1,31 @@
+<p><b><i>Согласование существительных с определениями.</i></b>Впишите вместо пропусков прилагательные или местоимения в нужной форме.<br><b>А.</b> «Что это такое? Кто это такой».</p> 
+		 
+Это (красивый)<input data-answ="красивая" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>машина.<br>
+Это (красивый)<input data-answ="красивый" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>автомобиль.<br>
+Это (красивый)<input data-answ="красивое" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>платье.<br>
+Это (красивый)<input data-answ="красивое" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>место.<br>
+Это (красивый)<input data-answ="красивые" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>места.<br>
+Это (большой)<input data-answ="большой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>чемодан.<br>
+Это (большой)<input data-answ="большая" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>сумка.<br>
+Это (вкусный)<input data-answ="вкусный" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>торт.<br>
+Это (вкусный)<input data-answ="вкусное" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>пирожное.<br>
+Это (вкусный)<input data-answ="вкусная" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>булочка.<br>
+Это (невкусный)<input data-answ="невкусный" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>кофе.<br>
+Это (невкусный)<input data-answ="невкусная" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>каша.<br>
+Это (трудный)<input data-answ="трудная" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>задача.<br>
+Это (трудный)<input data-answ="трудное" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>упражнение.<br>
+Это (трудный)<input data-answ="трудные" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>задачи.<br>
+Это (интересный)<input data-answ="интересная" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>книга.<br>
+Это (интересный<input data-answ="интересный" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>рассказ.<br>
+Это (хороший)<input data-answ="хорошая" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>песня.<br>
+Это (хороший)<input data-answ="хорошее" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>стихотворение.<br>
+Это (новый)<input data-answ="новая" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>школа.<br>
+Это (новый)<input data-answ="новый" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>дом.<br>
+Это (ваш)<input data-answ="ваша" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(новый)<input data-answ="новая" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>учительница.<br>
+Это (мой)<input data-answ="мой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(новый)<input data-answ="новый" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>портфель.<br>
+Это (ваш)<input data-answ="ваши" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(новый)<input data-answ="новые" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>учебники.<br>
+Это (страшный)<input data-answ="страшная" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>история.<br>
+Это (смешной)<input data-answ="смешной" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>анекдот.<br>
+Это (грустный)<input data-answ="грустный" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>рассказ.<br>
+Это (весёлый)<input data-answ="весёлая" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>повесть.<br>
+Это (мой)<input data-answ="мой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(школьный)<input data-answ="школьный" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>приятель.

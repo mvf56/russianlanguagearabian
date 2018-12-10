@@ -1,0 +1,1833 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes">	
+    <!-- Обрати внимание на эти три тега! Они нужны, чтобы страница адекватно выглядела на мобильном устройстве -->
+    <meta charset="UTF-8">
+   
+   <!--стили фреймворка jquery mobile-->
+       
+  <!-- <style type="text/css" media="screen">@import "js/jquery.mobile-1.4.5.min.css";</style> -->
+     <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
+	 <link rel="stylesheet" href="js/jquery-ui.min.css" />
+   
+    <style>
+   
+   
+     
+   #ex2is{width:100%;}  
+   
+   
+   
+ 
+   
+   li {
+   list-style-type: none;
+   }
+  
+    </style>
+  
+
+  <script src="js/jquery-1.9.1.min.js"></script>
+   <script src="js/detect.min.js"></script>
+	
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+    </script>
+    
+	<script src="js/jquery.mobile-1.4.5.min.js" type="application/x-javascript" charset="utf-8"></script>
+   <script src="js/jquery-ui.min.js" type="application/x-javascript" charset="utf-8"></script>
+  <script src="js/jquery.ui.touch-punch.min.js" type="application/x-javascript" charset="utf-8"></script>
+ 
+ 
+
+
+
+
+
+ <script>
+   
+   var video;
+   var pict_of_present=new Array();
+   var alphabet=["А","Б","В","Г","Д","Е","Ё","Ж","З","И","Й","К","Л","М","Н","О","П","Р","С","Т","У","Ф","Х","Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я"];
+  
+   
+     
+
+   //отключаем все видео звук при возвращении на титул
+   function off_video_back(){
+   /*for(s=0;s<things.length; s++){things[s].sound_yes.pause();things[s].sound_no.pause();}
+   things=[];
+   chto_eto.pause();
+   kto_eto.pause(); 
+   da_pravilno.pause();
+      */
+	  
+	 /* video.pause();
+	  $("#video").attr("src","");*/
+	
+   pict_of_present=[];
+	
+   }
+   
+    
+   
+
+
+  
+  //****************Вывод необходимого пункта упражнения*********************
+   
+   function show_exercise(what_get,kuda_vivodit)
+      {
+      $(document).ready(function (){ 
+         
+          $.get(what_get, function(data) {
+		  
+		  $("#"+kuda_vivodit).html(data);
+		  
+          //alert(data);
+          }, "text");
+      
+      });
+   }
+    
+    
+
+//******************************************************************************************************  
+  
+  
+   
+ //************функции для таскания*******************************************************************
+function fillInput( $frase,event) {
+			    $(event.target).val($frase.text());
+				//$(event.target).find( "input" ).val($frase.text());
+				
+			};
+		
+
+
+
+//************************************************************************************************** 
+   
+   
+   
+  
+  
+  
+  
+   
+  
+      $(document).on("pagebeforeshow","#main_page",function() {
+   	
+	
+	//*********************Раскрывающийся список Согласование********************************
+	 $(document).off('click', '#soglasovanie').on('click', '#soglasovanie',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_soglasovanie").is(":hidden")){		     
+		  	  $("#menu_soglasovanie").show();}else
+			  
+			  {if($("#menu_soglasovanie").is(":visible")){			 
+			  $("#menu_soglasovanie").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	
+	 //*********************Раскрывающийся список Где? Куда?********************************
+	 $(document).off('click', '#gde').on('click', '#gde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_gde").is(":hidden")){		     
+		  	  $("#menu_gde").show();}else
+			  
+			  {if($("#menu_gde").is(":visible")){			 
+			  $("#menu_gde").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	 
+	 
+	  //*********************Раскрывающийся список Быть********************************
+	 $(document).off('click', '#is').on('click', '#is',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_is").is(":hidden")){		     
+		  	  $("#menu_is").show();}else
+			  
+			  {if($("#menu_is").is(":visible")){			 
+			  $("#menu_is").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************
+	 
+	 
+
+	 
+	});
+   
+   
+   
+   //***************************Обработка Упражнение 1***********************************************
+      $(document).on('pagebeforeshow', "#upr1",function () {
+         //автоматом запускаем упражнение 1 пункт а
+		 $("#a_upr1").attr("src","pict/a_red.gif");
+		 $("#b_upr1").attr("src","pict/b.gif");
+		 show_exercise('exercises/upr1/a.txt','text_upragneniya1');
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});
+		 
+		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_button').on('vmouseup', '#check_button',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_button').on('vmousedown', '#check_button',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });
+		
+		
+		
+		
+		 //отпускание кнопки А 
+		  $(document).off('vmouseup', '#a_upr1').on('vmouseup', '#a_upr1',function(e) {           
+			$("#b_upr1").attr("src","pict/b.gif");
+		  });
+ 
+        //нажатие на кнопку А 
+        $(document).off('vmousedown', '#a_upr1').on('vmousedown', '#a_upr1',function(e) {
+            $(this).attr("src","pict/a_red.gif");			
+		   
+        });
+		
+		
+		//отпускание кнопки Б 
+		  $(document).off('vmouseup', '#b_upr1').on('vmouseup', '#b_upr1',function(e) {
+            $("#a_upr1").attr("src","pict/a.gif");
+         });
+ 
+        //нажатие на кнопку Б 
+        $(document).off('vmousedown', '#b_upr1').on('vmousedown', '#b_upr1',function(e) {
+            $(this).attr("src","pict/b_red.gif");
+		   
+        });
+		  
+		  
+
+		  
+		  
+	    //***************************Выводим Упражнение 1 Пункт А*****************************************   
+		    $(document).off('click', '#a_upr1').on('click', '#a_upr1',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr1/a.txt','text_upragneniya1');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		  
+	  //***************************Выводим Упражнение 1 Пункт Б*****************************************   
+		    $(document).off('click', '#b_upr1').on('click', '#b_upr1',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr1/b.txt','text_upragneniya1');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		  
+		   
+        //***************************Проверка Упражнения 1*****************************************   
+		    $(document).off('click', '#check_button').on('click', '#check_button',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 1*****************************************
+  
+  
+  
+
+
+
+
+
+     //***************************Обработка Упражнение 2***********************************************
+      $(document).on('pagebeforeshow', "#upr2",function () {
+         //автоматом запускаем упражнение 1 пункт а
+		 $("#a_upr2").attr("src","pict/a_red.gif");
+		 $("#b_upr2").attr("src","pict/b.gif");
+		  $("#v_upr2").attr("src","pict/v.gif");
+		 $("#g_upr2").attr("src","pict/g.gif");
+		 show_exercise('exercises/upr2/a.txt','text_upragneniya2');
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});
+		 
+		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_button2').on('vmouseup', '#check_button2',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_button2').on('vmousedown', '#check_button2',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });
+		
+		
+		
+		
+		 //отпускание кнопки А 
+		  $(document).off('vmouseup', '#a_upr2').on('vmouseup', '#a_upr2',function(e) {           
+			$("#b_upr2").attr("src","pict/b.gif");
+			$("#v_upr2").attr("src","pict/v.gif");
+			$("#g_upr2").attr("src","pict/g.gif");
+		  });
+ 
+        //нажатие на кнопку А 
+        $(document).off('vmousedown', '#a_upr2').on('vmousedown', '#a_upr2',function(e) {
+            $(this).attr("src","pict/a_red.gif");			
+		   
+        });
+		
+		
+		//отпускание кнопки Б 
+		  $(document).off('vmouseup', '#b_upr2').on('vmouseup', '#b_upr2',function(e) {
+            $("#a_upr2").attr("src","pict/a.gif");
+			$("#v_upr2").attr("src","pict/v.gif");
+			$("#g_upr2").attr("src","pict/g.gif");
+         });
+ 
+        //нажатие на кнопку Б 
+        $(document).off('vmousedown', '#b_upr2').on('vmousedown', '#b_upr2',function(e) {
+            $(this).attr("src","pict/b_red.gif");
+		   
+        });
+		  
+		  
+
+		 //отпускание кнопки В 
+		  $(document).off('vmouseup', '#v_upr2').on('vmouseup', '#v_upr2',function(e) {
+            $("#a_upr2").attr("src","pict/a.gif");
+			$("#b_upr2").attr("src","pict/b.gif");
+			$("#g_upr2").attr("src","pict/g.gif");
+         });
+ 
+        //нажатие на кнопку В 
+        $(document).off('vmousedown', '#v_upr2').on('vmousedown', '#v_upr2',function(e) {
+            $(this).attr("src","pict/v_red.gif");
+		   
+        });
+		
+		
+		
+		
+		//отпускание кнопки Г 
+		  $(document).off('vmouseup', '#g_upr2').on('vmouseup', '#g_upr2',function(e) {
+            $("#a_upr2").attr("src","pict/a.gif");
+			$("#v_upr2").attr("src","pict/v.gif");
+			$("#b_upr2").attr("src","pict/b.gif");
+         });
+ 
+        //нажатие на кнопку Г 
+        $(document).off('vmousedown', '#g_upr2').on('vmousedown', '#g_upr2',function(e) {
+            $(this).attr("src","pict/g_red.gif");
+		   
+        });
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+	    //***************************Выводим Упражнение 2 Пункт А*****************************************   
+		    $(document).off('click', '#a_upr2').on('click', '#a_upr2',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr2/a.txt','text_upragneniya2');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		  
+	  //***************************Выводим Упражнение 2 Пункт Б*****************************************   
+		    $(document).off('click', '#b_upr2').on('click', '#b_upr2',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr2/b.txt','text_upragneniya2');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		 //***************************Выводим Упражнение 2 Пункт В*****************************************   
+		    $(document).off('click', '#v_upr2').on('click', '#v_upr2',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr2/v.txt','text_upragneniya2');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+
+
+
+
+      //***************************Выводим Упражнение 2 Пункт Г*****************************************   
+		    $(document).off('click', '#g_upr2').on('click', '#g_upr2',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	       show_exercise('exercises/upr2/g.txt','text_upragneniya2');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************	  
+		  
+		  
+		  
+		   
+        //***************************Проверка Упражнения 2*****************************************   
+		    $(document).off('click', '#check_button2').on('click', '#check_button2',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 2*****************************************
+
+
+
+  
+  
+  
+  //***************************Обработка Упражнение 3***********************************************
+      $(document).on('pagebeforeshow', "#upr3",function () {
+         //автоматом запускаем упражнение 1 пункт а
+		 $("#a_upr3").attr("src","pict/a_red.gif");
+		 $("#b_upr3").attr("src","pict/b.gif");
+		  $("#v_upr3").attr("src","pict/v.gif");
+		 $("#g_upr3").attr("src","pict/g.gif");
+		  $("#d_upr3").attr("src","pict/d.gif");
+		 show_exercise('exercises/upr3/a.txt','text_upragneniya3');
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});
+		 
+		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_button3').on('vmouseup', '#check_button3',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_button3').on('vmousedown', '#check_button3',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });
+		
+		
+		
+		
+		 //отпускание кнопки А 
+		  $(document).off('vmouseup', '#a_upr3').on('vmouseup', '#a_upr3',function(e) {           
+			$("#b_upr3").attr("src","pict/b.gif");
+			$("#v_upr3").attr("src","pict/v.gif");
+			$("#g_upr3").attr("src","pict/g.gif");
+			$("#d_upr3").attr("src","pict/d.gif");
+		  });
+ 
+        //нажатие на кнопку А 
+        $(document).off('vmousedown', '#a_upr3').on('vmousedown', '#a_upr3',function(e) {
+            $(this).attr("src","pict/a_red.gif");			
+		   
+        });
+		
+		
+		//отпускание кнопки Б 
+		  $(document).off('vmouseup', '#b_upr3').on('vmouseup', '#b_upr3',function(e) {
+            $("#a_upr3").attr("src","pict/a.gif");
+			$("#v_upr3").attr("src","pict/v.gif");
+			$("#g_upr3").attr("src","pict/g.gif");
+			$("#d_upr3").attr("src","pict/d.gif");
+         });
+ 
+        //нажатие на кнопку Б 
+        $(document).off('vmousedown', '#b_upr3').on('vmousedown', '#b_upr3',function(e) {
+            $(this).attr("src","pict/b_red.gif");
+		   
+        });
+		  
+		  
+
+		 //отпускание кнопки В 
+		  $(document).off('vmouseup', '#v_upr3').on('vmouseup', '#v_upr3',function(e) {
+            $("#a_upr3").attr("src","pict/a.gif");
+			$("#b_upr3").attr("src","pict/b.gif");
+			$("#g_upr3").attr("src","pict/g.gif");
+			$("#d_upr3").attr("src","pict/d.gif");
+         });
+ 
+        //нажатие на кнопку В 
+        $(document).off('vmousedown', '#v_upr3').on('vmousedown', '#v_upr3',function(e) {
+            $(this).attr("src","pict/v_red.gif");
+		   
+        });
+		
+		
+		
+		
+		//отпускание кнопки Г 
+		  $(document).off('vmouseup', '#g_upr3').on('vmouseup', '#g_upr3',function(e) {
+            $("#a_upr3").attr("src","pict/a.gif");
+			$("#v_upr3").attr("src","pict/v.gif");
+			$("#b_upr3").attr("src","pict/b.gif");
+			$("#d_upr3").attr("src","pict/d.gif");
+         });
+ 
+        //нажатие на кнопку Г 
+        $(document).off('vmousedown', '#g_upr3').on('vmousedown', '#g_upr3',function(e) {
+            $(this).attr("src","pict/g_red.gif");
+		   
+        });
+		  
+		  
+		  
+		  //отпускание кнопки Д 
+		  $(document).off('vmouseup', '#d_upr3').on('vmouseup', '#d_upr3',function(e) {
+            $("#a_upr3").attr("src","pict/a.gif");
+			$("#v_upr3").attr("src","pict/v.gif");
+			$("#b_upr3").attr("src","pict/b.gif");
+			$("#g_upr3").attr("src","pict/g.gif");
+         });
+ 
+        //нажатие на кнопку Д 
+        $(document).off('vmousedown', '#d_upr3').on('vmousedown', '#d_upr3',function(e) {
+            $(this).attr("src","pict/d_red.gif");
+		   
+        });
+		  
+		  
+		  
+		  
+		  
+	    //***************************Выводим Упражнение 3 Пункт А*****************************************   
+		    $(document).off('click', '#a_upr3').on('click', '#a_upr3',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr3/a.txt','text_upragneniya3');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		  
+	  //***************************Выводим Упражнение 3 Пункт Б*****************************************   
+		    $(document).off('click', '#b_upr3').on('click', '#b_upr3',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr3/b.txt','text_upragneniya3');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		 //***************************Выводим Упражнение 3 Пункт В*****************************************   
+		    $(document).off('click', '#v_upr3').on('click', '#v_upr3',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr3/v.txt','text_upragneniya3');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+
+
+
+
+      //***************************Выводим Упражнение 3 Пункт Г*****************************************   
+		    $(document).off('click', '#g_upr3').on('click', '#g_upr3',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	       show_exercise('exercises/upr3/g.txt','text_upragneniya3');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************	  
+		  
+		  
+		  
+		 //***************************Выводим Упражнение 3 Пункт Д*****************************************   
+		    $(document).off('click', '#d_upr3').on('click', '#d_upr3',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	       show_exercise('exercises/upr3/d.txt','text_upragneniya3');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************	   
+		  
+		  
+		   
+        //***************************Проверка Упражнения 3*****************************************   
+		    $(document).off('click', '#check_button3').on('click', '#check_button3',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 3*****************************************
+  
+  
+   //***************************Обработка Упражнение 1 Где? Куда?***********************************************
+      $(document).on('pagebeforeshow', "#upr1gde",function () {
+         //автоматом запускаем упражнение 1 пункт а
+		 $("#a_upr1gde").attr("src","pict/a_red.gif");
+		 $("#b_upr1gde").attr("src","pict/b.gif");
+		 $("#v_upr1gde").attr("src","pict/v.gif");
+		 show_exercise('exercises/upr1gde/a.txt','text_upragneniya1gde');
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});
+		 
+		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_buttongde').on('vmouseup', '#check_buttongde',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_buttongde').on('vmousedown', '#check_buttongde',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });
+		
+		
+		
+		
+		 //отпускание кнопки А 
+		  $(document).off('vmouseup', '#a_upr1gde').on('vmouseup', '#a_upr1gde',function(e) {           
+			$("#b_upr1gde").attr("src","pict/b.gif");
+			$("#v_upr1gde").attr("src","pict/v.gif");
+		  });
+ 
+        //нажатие на кнопку А 
+        $(document).off('vmousedown', '#a_upr1gde').on('vmousedown', '#a_upr1gde',function(e) {
+            $(this).attr("src","pict/a_red.gif");			
+		   
+        });
+		
+		
+		//отпускание кнопки Б 
+		  $(document).off('vmouseup', '#b_upr1gde').on('vmouseup', '#b_upr1gde',function(e) {
+            $("#a_upr1gde").attr("src","pict/a.gif");
+			$("#v_upr1gde").attr("src","pict/v.gif");
+         });
+ 
+        //нажатие на кнопку Б 
+        $(document).off('vmousedown', '#b_upr1gde').on('vmousedown', '#b_upr1gde',function(e) {
+            $(this).attr("src","pict/b_red.gif");
+		   
+        });
+		
+		
+		//отпускание кнопки В 
+		  $(document).off('vmouseup', '#v_upr1gde').on('vmouseup', '#v_upr1gde',function(e) {
+            $("#a_upr1gde").attr("src","pict/a.gif");
+			$("#b_upr1gde").attr("src","pict/b.gif");
+         });
+ 
+        //нажатие на кнопку В 
+        $(document).off('vmousedown', '#v_upr1gde').on('vmousedown', '#v_upr1gde',function(e) {
+            $(this).attr("src","pict/v_red.gif");
+		   
+        });
+		  
+		  
+
+		  
+		  
+	    //***************************Выводим Упражнение 1 Где? Куда? Пункт А*****************************************   
+		    $(document).off('click', '#a_upr1gde').on('click', '#a_upr1gde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr1gde/a.txt','text_upragneniya1gde');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		  
+	  //***************************Выводим Упражнение 1 Где? Куда? Пункт Б*****************************************   
+		    $(document).off('click', '#b_upr1gde').on('click', '#b_upr1gde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr1gde/b.txt','text_upragneniya1gde');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  //***************************Выводим Упражнение 1 Где? Куда? Пункт В*****************************************   
+		    $(document).off('click', '#v_upr1gde').on('click', '#v_upr1gde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr1gde/v.txt','text_upragneniya1gde');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		   
+        //***************************Проверка Упражнения 1 Где? Куда?*****************************************   
+		    $(document).off('click', '#check_buttongde').on('click', '#check_buttongde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 1 Где? Куда?*****************************************
+  
+  
+  
+     //***************************Обработка Упражнение 2 Где? Куда?***********************************************
+      $(document).on('pagebeforeshow', "#upr2gde",function () {
+         //автоматом запускаем упражнение 1 пункт а
+		 $("#a_upr2gde").attr("src","pict/a_red.gif");
+		 $("#b_upr2gde").attr("src","pict/b.gif");		
+		 show_exercise('exercises/upr2gde/a.txt','text_upragneniya2gde');
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});
+		 
+		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_button2gde').on('vmouseup', '#check_button2gde',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_button2gde').on('vmousedown', '#check_button2gde',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });
+		
+		
+		
+		
+		 //отпускание кнопки А 
+		  $(document).off('vmouseup', '#a_upr2gde').on('vmouseup', '#a_upr2gde',function(e) {           
+			$("#b_upr2gde").attr("src","pict/b.gif");			
+		  });
+ 
+        //нажатие на кнопку А 
+        $(document).off('vmousedown', '#a_upr2gde').on('vmousedown', '#a_upr2gde',function(e) {
+            $(this).attr("src","pict/a_red.gif");			
+		   
+        });
+		
+		
+		//отпускание кнопки Б 
+		  $(document).off('vmouseup', '#b_upr2gde').on('vmouseup', '#b_upr2gde',function(e) {
+            $("#a_upr2gde").attr("src","pict/a.gif");			
+         });
+ 
+        //нажатие на кнопку Б 
+        $(document).off('vmousedown', '#b_upr2gde').on('vmousedown', '#b_upr2gde',function(e) {
+            $(this).attr("src","pict/b_red.gif");
+		   
+        });
+		
+		
+		
+
+		  
+		  
+	    //***************************Выводим Упражнение 2 Где? Куда? Пункт А*****************************************   
+		    $(document).off('click', '#a_upr2gde').on('click', '#a_upr2gde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr2gde/a.txt','text_upragneniya2gde');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		  
+		  
+	  //***************************Выводим Упражнение 2 Где? Куда? Пункт Б*****************************************   
+		    $(document).off('click', '#b_upr2gde').on('click', '#b_upr2gde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+       
+	   show_exercise('exercises/upr2gde/b.txt','text_upragneniya2gde');
+	   
+	   
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+		  
+		  
+		  
+		    
+		  
+		   
+        //***************************Проверка Упражнения 2 Где? Куда?*****************************************   
+		    $(document).off('click', '#check_button2gde').on('click', '#check_button2gde',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 2 Где? Куда?*****************************************
+  
+  
+  
+   //***************************Обработка Упражнение 1 Быть***********************************************
+      $(document).on('pagebeforeshow', "#upr1is",function () {
+         
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_buttonis').on('vmouseup', '#check_buttonis',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_buttonis').on('vmousedown', '#check_buttonis',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });	
+		
+		     
+		  
+		   
+        //***************************Проверка Упражнения 1 Быть   
+		    $(document).off('click', '#check_buttonis').on('click', '#check_buttonis',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 1 Быть************************************
+  
+  
+    //***************************Обработка Упражнение 2 Быть***********************************************
+      $(document).on('pagebeforeshow', "#upr2is",function () {
+         
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_button2is').on('vmouseup', '#check_button2is',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_button2is').on('vmousedown', '#check_button2is',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });	
+		
+		     
+			 
+		//************************таскание фраз***********************************************	 
+		
+		var inputs_kuda=new Array();
+		inputs_kuda=[];
+		//запоминаем поля, куда будем кидать
+		   $('input').each(function(key, pole_input){
+           inputs_kuda[key]=$(pole_input);
+		 
+			});
+		
+		
+		
+   //**************************************************работа с фразами, которые таскаем		
+		
+	//	$('.phrases').each(function(key, phrase){	 
+					
+       // делаем фразы таскаемыми
+	   $( "li", $("#chto_taskaem") ).draggable({
+			//cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+			revert: "invalid", // when not dropped, the item will revert back to its initial position
+			containment: $( "#demo-frame" ).length ? "#demo-frame" : "document", // stick to demo-frame if present
+			helper: "clone",
+			cursor: "move"
+		});
+
+		// прописываем принятие полями фраз
+		$("input.with_inputs").droppable({
+			accept: "#chto_taskaem > li",
+			activeClass: false,
+			drop: function( event, ui) {
+				fillInput( ui.draggable,event);
+			}
+		});
+
+			  
+	  		 
+			 
+			 
+		// });
+
+        //**************************************************************************************
+		 
+		   
+        //***************************Проверка Упражнения 2 Быть*****************************************   
+		    $(document).off('click', '#check_button2is').on('click', '#check_button2is',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 2 Быть************************************
+  
+  
+  
+  //***************************Обработка Упражнение 3 Быть***********************************************
+      $(document).on('pagebeforeshow', "#upr3is",function () {
+         
+		 
+		 //очищаем поля
+		   $('input').each(function(key, pole_input){
+           
+		   $(pole_input).attr("style","background: white;");  
+		    $(pole_input).val("");
+		  	 
+			});		 
+		 
+		 
+		 
+		 //отпускание кнопки проверка  
+		  $(document).off('vmouseup', '#check_button3is').on('vmouseup', '#check_button3is',function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#check_button3is').on('vmousedown', '#check_button3is',function(e) {
+            $(this).attr("src","pict/check_on.png");
+		   
+        });	
+		
+		     
+		  
+		   
+        //***************************Проверка Упражнения 3 Быть*****************************************   
+		    $(document).off('click', '#check_button3is').on('click', '#check_button3is',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+             e.handled = true;
+			
+         $('input').each(function(key, pole_input){
+           if ($(pole_input).data('answ')==$(pole_input).val().trim()){
+		   $(pole_input).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		 
+		  }else{
+		   $(pole_input).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		  }
+		 
+			});
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец обработка Упражнение 3 Быть************************************
+  
+  
+  </script>
+  
+  </head>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <body>
+   
+   <!-------------------------------------ОСНОВНАЯ СТРАНИЦА-------------------------------------------------->
+   <div data-role="page" id="main_page" data-theme="a">
+      
+	  <div data-role="header" >
+		<h1 id="twi_acc"><img  src="../pict/interaktivarab.gif" alt="Интерактивные задания"><br>Интерактивные задания</h1>
+		<a href="../index.html" rel="external" data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+	  </div>
+	  
+	  <div data-role="content">
+	  	  
+	     <ul data-role="listview" data-inset="true" data-theme="a">
+			
+			
+			<li>
+			<a href="chas.html"  rel="external" id=chas><img src="pict/chas.gif" alt="Который час?"><img src="pict/chasarab.gif" alt="Который час?"><p>Который час?</p></a>
+					
+			</li>
+			
+			
+			
+			<li>
+			<a href="" id=soglasovanie><img  src="pict/soglasovanie.gif" alt="Согласование"><img  src="pict/soglasovaniearab.gif" alt="Согласование"><p>Согласование</p></a>
+			  <ul style="display:none;" id=menu_soglasovanie  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=upragnenie1 href="#upr1"><img style="margin-left: 17px;" src="pict/upr1.gif" alt="Согласование - Упражнение 1">&nbsp;&nbsp;Упражнение 1</a></li>
+	            <li><a id=upragnenie2 href="#upr2"><img style="margin-left: 17px;" src="pict/upr2.gif" alt="Согласование - Упражнение 2">&nbsp;&nbsp;Упражнение 2</a></li>
+	            <li><a id=upragnenie3 href="#upr3"><img style="margin-left: 17px;" src="pict/upr3.gif" alt="Согласование - Упражнение 3">&nbsp;&nbsp;Упражнение 3</a></li>
+			 </ul>
+		    </li>
+			
+			
+			<li>
+			<a href="" id=gde><img  src="pict/kompas.gif" alt="Где? Куда?"><img  src="pict/kompasarab.gif" alt="Где? Куда?"><p>Где? Куда?</p></a>
+			  <ul style="display:none;" id=menu_gde  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=upragnenie1_gde href="#upr1gde"><img style="margin-left: 17px;" src="pict/upr1.gif" alt="Где? Куда? - Упражнение 1">&nbsp;&nbsp;Упражнение 1</a></li>
+	            <li><a id=upragnenie2_gde href="#upr2gde"><img style="margin-left: 17px;" src="pict/upr2.gif" alt="Где? Куда? - Упражнение 2">&nbsp;&nbsp;Упражнение 2</a></li>
+	           </ul>
+		    </li>
+			
+			
+			<li>
+			<a href="" id=is><img  src="pict/is.gif" alt="Быть"><img  src="pict/isarab.gif" alt="Быть"><p>Глагол 'быть'</p></a>
+			  <ul style="display:none;" id=menu_is  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=upragnenie1_is href="#upr1is"><img style="margin-left: 17px;" src="pict/upr1.gif" alt="Глагол 'быть' - Упражнение 1">&nbsp;&nbsp;Упражнение 1</a></li>
+	            <li><a id=upragnenie2_is href="#upr2is"><img style="margin-left: 17px;" src="pict/upr2.gif" alt="Глагол 'быть' - Упражнение 2">&nbsp;&nbsp;Упражнение 2</a></li>
+	            <li><a id=upragnenie3_is href="#upr3is"><img style="margin-left: 17px;" src="pict/upr3.gif" alt="Глагол 'быть' - Упражнение 3">&nbsp;&nbsp;Упражнение 3</a></li>
+			 </ul>
+		    </li>
+			
+			
+			
+			
+		</ul>	
+     </div>
+	 
+	 <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+   </div>
+   
+   <!-------------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 1-------------------------------------------------->
+ <div data-role="page" id="upr1" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/soglasovaniearab.gif" alt="Согласование"><br>Согласование - Упражнение 1</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	    <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img src="pict/a.gif" id=a_upr1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/b.gif" id=b_upr1>
+	   </div> 
+
+	<div id=text_upragneniya1>   
+	   
+	 	
+
+   </div>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img width=148 src="pict/check.png" id=check_button>
+	   </div>    
+	     
+   
+   
+    </div>
+   
+   
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div>
+   
+   
+   
+
+ <!-------------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 2-------------------------------------------------->
+ <div data-role="page" id="upr2" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/soglasovaniearab.gif" alt="Согласование"><br>Согласование - Упражнение 2</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	    <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img src="pict/a.gif" id=a_upr2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/b.gif" id=b_upr2>
+		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/v.gif" id=v_upr2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/g.gif" id=g_upr2>
+	   </div> 
+
+	<div id=text_upragneniya2>   
+	   
+	 	
+
+   </div>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img width=148 src="pict/check.png" id=check_button2>
+	   </div>    
+	     
+   
+   
+    </div>
+   
+   
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div>
+   
+
+   
+  <!-------------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 3-------------------------------------------------->
+ <div data-role="page" id="upr3" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/soglasovaniearab.gif" alt="Согласование"><br>Согласование - Упражнение 3</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	    <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img src="pict/a.gif" id=a_upr3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/b.gif" id=b_upr3>
+		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/v.gif" id=v_upr3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/g.gif" id=g_upr3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/d.gif" id=d_upr3>
+	   </div> 
+
+	<div id=text_upragneniya3>   
+	   
+	 	
+
+   </div>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img width=148 src="pict/check.png" id=check_button3>
+	   </div>    
+	     
+   
+   
+    </div>
+   
+   
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div>  
+ 
+ 
+ 
+  <!-------------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 1 Где? Куда?-------------------------------------------------->
+ <div data-role="page" id="upr1gde" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/kompasarab.gif" alt="Где? Куда?"><br>Где? Куда? - Упражнение 1</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	    <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img src="pict/a.gif" id=a_upr1gde>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/b.gif" id=b_upr1gde>
+		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/v.gif" id=v_upr1gde>
+	   </div> 
+
+	<div id=text_upragneniya1gde>   
+	   
+	 	
+
+   </div>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img width=148 src="pict/check.png" id=check_buttongde>
+	   </div>    
+	     
+   
+   
+    </div>
+   
+   
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div>
+   
+   
+   
+  <!-------------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 2 Где? Куда?-------------------------------------------------->
+ <div data-role="page" id="upr2gde" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/kompasarab.gif" alt="Где? Куда?"><br>Где? Куда? - Упражнение 2</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	    <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img src="pict/a.gif" id=a_upr2gde>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="pict/b.gif" id=b_upr2gde>		  
+	   </div> 
+
+	<div id=text_upragneniya2gde>   
+	   
+	 	
+
+   </div>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img width=148 src="pict/check.png" id=check_button2gde>
+	   </div>    
+	     
+   
+   
+    </div>
+   
+   
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+  </div>
+   
+   
+    <!-----------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 1 Быть-------------------------------------------------->
+ <div data-role="page" id="upr1is" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/isarab.gif" alt="Глагол 'Быть'"><br>Глагол "Быть" - Упражнение 1</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">    
+	    
+
+	<div id=text_upragneniya1is>   
+	   <p>Переделай предложения, чтобы они относились к прошедшему времени. Не забудь о том, в какую форму надо поставить существительное-сказуемое, например:<br>Он учитель. →  <i>Раньше</i> он был учителем.</p>       
+	   
+	   Гагарин − военный лётчик. → До полёта в космос<input data-answ="Гагарин был военным лётчиком" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Наш министр – учитель математики. → Раньше<input data-answ="наш министр был учителем математики" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Твой брат – бизнесмен. → До экономического кризиса<input data-answ="твой брат был бизнесменом" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Моя бабушка – учительница. → Много лет назад<input data-answ="моя бабушка была учительницей" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Этот лётчик – пилот второго класса. → Два года назад<input data-answ="этот лётчик был пилотом второго класса" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>
+       Его брат – футболист. → Ещё до поступления в университет<input data-answ="его брат был футболистом" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Папин друг – моряк. → Раньше<input data-answ="папин друг был моряком" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Наш дедушка – водитель автобуса. → В молодости<input data-answ="наш дедушка был водителем автобуса" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Наш учитель физики – инженер-нефтяник. → Сразу после института<input data-answ="наш учитель физики был инженером-нефтяником" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Твой папа – музыкант. → Когда-то<input data-answ="твой папа был музыкантом" ondrop="drop(event)" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>
+
+	   
+	   
+	 	
+
+   </div>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img width=148 src="pict/check.png" id=check_buttonis>
+	   </div>    
+	     
+   
+   
+    </div>
+   
+   
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+  </div>
+  
+  
+   <!-------------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 2 Быть-------------------------------------------------->
+ <div data-role="page" id="upr2is" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/isarab.gif" alt="Глагол 'Быть'"><br>Глагол "Быть" -  Упражнение 2</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	<p>В упражнении в части А приводятся предложения, в которых сказуемое стоит либо в форме прошедшего (реального) времени, либо  в форме сослагательного наклонения (нереального). Подбери к каждому предложению из части А подходящее по смыслу и по форме предложение из части Б.</p>
+
+
+    <table id=ex2is>	
+
+<!--столбец с полями - куда таскаем -->
+     <tr><td>
+
+	<b>А.</b>	
+	
+	
+    Моя мама работала врачом<input class=with_inputs data-answ="… до моего рождения." id=target1 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>    
+	
+	
+	Мне бы не хотелось с вами ссориться<input class=with_inputs data-answ="… нам нужно будет сделать ещё многое вместе." id=target2 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+   
+   
+  
+   Мой дедушка выучил русский язык<input class=with_inputs data-answ="… когда учился в России." id=target3 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+   
+	
+	
+	
+	Я бы не сделал домашнее задание<input class=with_inputs data-answ="… без помощи брата." id=target4 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+    
+	
+	
+	
+	Наш учитель не простудился<input class=with_inputs data-answ="… так как он закалённый человек." id=target5 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+   
+	
+	
+	
+	Мой брат стал бы врачом<input class=with_inputs data-answ="… если бы у родителей были деньги не его обучение." id=target6 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+     
+	 
+	
+	Мы не поехали в Америку<input class=with_inputs data-answ="… потому что бабушка и дедушка слишком старые." id=target7 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+	
+   
+   
+   
+   Я бы выучил русский язык<input class=with_inputs data-answ="… но его не преподают у нас в школе." id=target8 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+  
+  
+   
+   Мама не приготовила обед<input class=with_inputs data-answ="… из-за родительского собрания." id=target9 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+ 
+  
+   
+	Андрей отказался бы писать эту статью<input class=with_inputs data-answ="… если бы знал, какой скандал она вызовет." id=target10 class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/> 
+	
+
+
+</td>
+<!--конец столбец с полями - куда таскаем -->
+
+
+<!-- Столбец с фразами которые таскаем-->
+<td>	
+    <p style="margin-left: 200px;"><b>Б.</b></p>
+	
+
+
+ <ul id=chto_taskaem>
+	<li>… если бы знал, какой скандал она вызовет.<br><br></li>
+	<li>… из-за родительского собрания.<br><br></li>
+	<li>… потому что бабушка и дедушка слишком старые.<br><br></li>
+	<li>… когда учился в России.<br><br></li>
+	<li>… если бы у родителей были деньги не его обучение.<br><br></li>
+	<li>… нам нужно будет сделать ещё многое вместе.<br><br></li>
+	<li>… так как он закалённый человек.<br><br></li>
+	<li>… до моего рождения.<br><br></li>
+	<li>… но его не преподают у нас в школе.<br><br></li>
+	<li>… без помощи брата.</li>
+ </ul>
+	
+	
+ 
+
+
+</td></tr>
+<!--конец столбца с фразами -->
+
+</table><!--конец содержания упраажнения 2 быть -->
+		 
+		
+	      <img style =align=center width=148 src="pict/check.png" id=check_button2is>
+	 
+   
+   
+  
+   
+ </div>  
+
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div>
+  
+ 
+   <!-------------------------------------СТРАНИЦА С УПРАЖНЕНИЕМ 3 Быть-------------------------------------------------->
+ <div data-role="page" id="upr3is" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/isarab.gif" alt="Глагол 'Быть'"><br>Глагол "Быть" -  Упражнение 3</h1>
+		<a href="#main_page"   data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	    
+
+	<div id=text_upragneniya3is>   
+	   <p>В предложениях глаголы стоят в настоящем времени. Переделай их так, чтобы глагол был в будущем времени, например:<br>Он читает роман «Война и мир». → <i>Завтра</i> он будет читать роман «Война и мир».</p>       
+	   
+	   Учительница проверяет тетради. После уроков<input data-answ="учительница будет проверять тетради" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Мы пьём чай и едим булочки. На большой перемене<input data-answ="мы будем пить чай и есть булочки" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Ученики решают задачи. На следующем уроке<input data-answ="ученики будут решать задачи" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Мой папа работает на буровой. Скоро<input data-answ="мой папа будет работать на буровой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       На уроке труда девочки шьют платья. Через неделю<input data-answ="на уроке труда девочки будут шить платья" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Твоя сестра работает в поликлинике. После окончания института<input data-answ="твоя сестра будет работать в поликлинике" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Он готовится к контрольной. Сегодня вечером<input data-answ="он будет готовиться к контрольной" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Мы пишем сочинение. После этого урока<input data-answ="мы будем писать сочинение" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Нефтяники бурят скважину. Во вторник<input data-answ="нефтяники будут бурить скважину" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+       Пекарь печёт хлеб. Рано утром<input data-answ="пекарь будет печь хлеб" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>   
+	   
+	 	
+
+   </div>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img width=148 src="pict/check.png" id=check_button3is>
+	   </div>    
+	     
+   
+   
+    </div>
+   
+   
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+  </div>
+   
+  </body>
+</html>

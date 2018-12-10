@@ -1,0 +1,14 @@
+<p><b><i>Согласование подлежащего и сказуемого.</i></b><br><b>А.</b> Впишите вместо пропусков глаголы в нужной форме настоящего времени.</p>
+Марина Сергеевна (работать)<input data-answ="работает" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>врачом в поликлинике.<br>
+Я (учиться)<input data-answ="учусь" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>в пятом классе.<br>
+Михаил Евгеньевич (работать)<input data-answ="работает" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>врачом в госпитале.<br>
+Ты (учиться)<input data-answ="учишься" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>очень хорошо, не то что мой племянник, который (делать)<input data-answ="делает" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>уроки раз в неделю.<br>
+Они (помогать)<input data-answ="помогают" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>людям.<br>
+Мы (жить)<input data-answ="живём" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>возле Нескучного сада.<br>
+Максим (участвовать)<input data-answ="участвует" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>в школьном конкурсе на лучшее знание русского языка, и Марина тоже в нём (участвовать)<input data-answ="участвует" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/><br>
+Алиса сейчас (переводить)<input data-answ="переводит" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>трудный текст, не мешай ей.<br>
+Индира хорошо (читать)<input data-answ="читает" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>по-русски, потому что он (изучать)<input data-answ="изучает" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>русский язык второй год.<br>
+Лиза красиво (писать)<input data-answ="пишет" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>по-русски.<br>
+Мама моего друга (преподавать)<input data-answ="преподаёт" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>русский язык.<br>
+Студенты (любить)<input data-answ="любят" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>своих преподавателей.<br>
+Дети редко (любить)<input data-answ="любят" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>манную кашу, но я её очень (любить)<input data-answ="люблю" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>.

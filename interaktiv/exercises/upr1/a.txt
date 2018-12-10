@@ -1,0 +1,133 @@
+<p><b><i>Согласование существительных с определениями.</i></b><br><b>А.</b> Определите род существительного и поставьте местоимение <b>ЭТОТ</b> в нужную форму.</p> 
+		 
+		<table style="font-family: Arial;" width=100%> 
+		<tr>
+		 <td> 
+	     <input data-answ="Эта" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>женщина работает в поликлинике.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Это" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>озеро находится в горах.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>мужчина работает на буровой.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>юноша сидит на скамейке.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Эта" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>страна находится на юге Африки.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>учитель работает в школе.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Эти" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>мальчики играли в футбол и разбили окно.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>нефтяник работает хорошо и много зарабатывает.</td>		   
+	    </tr>
+		
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Эта" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>ученица каждый день получает пятёрки.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>победитель олимпиады учится в нашей школе.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Эта" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>работа мне очень нравится.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Это" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>упражнение кажется очень трудным.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Эти" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>книги нравятся всем моим друзьям.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Эти" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>часы давно не ходят.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>мальчишка часто дерётся.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>парень дружит с моим братом.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>врач лечит мою маму.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td><div data-role="fieldcontain" > 
+	     <input data-answ="Эта" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></div></td>
+	     <td>тетрадь дорого стоит.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Эта" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>собака кусается.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>дождь мешает машинам ехать.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Этот" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>ручей впадает в озеро.</td>		   
+	    </tr>
+		
+		
+		
+	   </table>

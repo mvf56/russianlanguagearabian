@@ -1,0 +1,1390 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes">	
+    <!-- Обрати внимание на эти три тега! Они нужны, чтобы страница адекватно выглядела на мобильном устройстве -->
+    <meta charset="UTF-8">
+   
+   <!--стили фреймворка jquery mobile-->
+       
+  <!-- <style type="text/css" media="screen">@import "js/jquery.mobile-1.4.5.min.css";</style> -->
+     <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
+   
+    <script src="js/jquery-1.9.1.min.js"></script>
+	
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+    </script>
+    
+	<script src="js/jquery.mobile-1.4.5.min.js" type="application/x-javascript" charset="utf-8"></script>
+  
+  
+  <script>
+   var xml;
+   var finish;//регулятор окончания показа объектов - режим 1
+   var pos;//текущая позиция выбранной вещи в массиве things
+   var talk_name;//переменная settimeout - чуть позже говорить название фрукта
+   var things=new Array();
+   var checker;
+   var schet;
+   
+   //переменные для режимов 2 и контроль
+  
+ /*  var numb_of_name;
+   var numb_of_name1;
+   var numb_of_visible1;
+   var numb_of_visible2;
+   var numb_of_visible;*/
+   
+   //описываем основные звуки
+   var chto_eto= new Audio();
+		 chto_eto.preload = 'auto';
+         chto_eto.src ="sounds/chto.mp3";
+		 
+   var kto_eto= new Audio();
+		 kto_eto.preload = 'auto';
+         kto_eto.src ="sounds/kto.mp3";
+		 
+   var da_pravilno= new Audio();
+		 da_pravilno.preload = 'auto';
+         da_pravilno.src ="sounds/da_pravilno.mp3";		 
+   
+   var neverno= new Audio();
+		 neverno.preload = 'auto';
+         neverno.src ="sounds/nepravilno.mp3";
+   
+   //var folder="est_hochetsya";
+
+   //отключаем весь звук при возвращении на титул
+   function off_sound_back(){
+   for(s=0;s<things.length; s++){things[s].sound_yes.pause();things[s].sound_no.pause();}
+   things=[];
+   chto_eto.pause();
+   kto_eto.pause(); 
+   da_pravilno.pause();
+   neverno.pause();   
+   }
+   
+   //отключаем звук при работе между переключением вещей
+   function off_sound(numb){
+   things[numb].sound_yes.pause();
+   things[numb].sound_no.pause();
+   chto_eto.pause();
+   kto_eto.pause();
+   da_pravilno.pause();
+   neverno.pause();
+   
+   }
+   
+   
+
+
+//Загружает XML-документ
+function getXMLDocument(url)
+{
+    var xml;
+    var XMLHttpRequest = window.XMLHttpRequest || window.ActiveXObject && function() {    return new ActiveXObject('Msxml2.XMLHTTP');};	
+
+    if(window.XMLHttpRequest)
+    {
+        alert(window.XMLHttpRequest);
+		xml=new window.XMLHttpRequest();
+        xml.open("GET", url,false);
+        xml.send(null);
+		alert(xml.responseXML, "Загрузка XML другие браузеры");
+		console.log("Загрузка XML другие браузеры");
+		document.write(xml, "Привет!XML загружен ! Другие браузеры")
+        return xml.responseXML;
+    }
+    else{
+        if(window.ActiveXObject)
+        {
+            xml=new ActiveXObject("Microsoft.XMLDOM");
+            xml.async=false;
+            xml.validateOnParse = false;
+            xml.load(url);
+			alert(xml,"Загрузка XML IE");
+			console.log("Загрузка XML IE");
+			document.write("{МашаXML загружен! IE")
+            return xml;
+        }
+		else if (document.implementation && document.implementation.createDocument)
+		{
+    xml=document.implementation.createDocument("","",null);
+    xml.load(url);
+   }
+}
+    /*    else
+        {
+            alert("Загрузка XML не поддерживается браузером");
+			console.log("Загрузка XML не поддерживается браузером");
+            return null;
+        }*/
+}
+
+
+function get_xml_old(folder){
+
+if (window.ActiveXObject) {
+alert("Первый!");
+    xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+    xmlDoc.async=false;
+    xmlDoc.load("xml/"+folder+"/config.xml");
+	 if(!xmlDoc) {alert("Нет данных!");}else{alert("Я получил файлик! Спасибо!");}
+	xmlObj=xmlDoc.documentElement;
+	
+	alert(xmlObj.xml);
+    
+} else if (document.implementation && document.implementation.createDocument) {
+    alert("Второй!");
+	xmlDoc=document.implementation.createDocument("","",null);
+    xmlDoc.load("xml/"+folder+"/config.xml");
+	alert(xmlDoc);
+    
+}
+
+
+}//конец новой загрузки xml
+
+
+
+function get_xml(folder,regim){
+  $(document).ready(function(){
+                  $.ajax({
+                      type: "GET",
+                      url: "xml/"+folder+"/config.xml",
+                      dataType: "xml",
+                      success: xmlParser
+                  });
+             });
+    
+	
+	
+	function xmlParser(data) {
+                      xml = data;
+                      things=[];
+                         $(xml).find("object").each(function () {
+                         var vesch=new Object;
+						 
+						 vesch.name=$(this).find("name").text();
+						 vesch.pict="pict/"+folder+"/"+$(this).find("pict").text();
+						 vesch.name_arab="pict/"+folder+"/"+$(this).find("namearab").text();
+						 
+						 var audio_da= new Audio();
+						 audio_da.preload = 'auto';
+                         audio_da.src ="sounds/"+folder+"/da/"+$(this).find("soundyes").text();
+                         //audio_da.play();
+                         vesch.sound_yes=audio_da;
+						 
+						 var audio_no= new Audio();
+						 audio_no.preload = 'auto';
+                         audio_no.src ="sounds/"+folder+"/no/"+$(this).find("soundno").text();
+						 vesch.sound_no=audio_no;
+						 
+						 
+						  vesch.see=0;
+                          vesch.ball=0;			 
+						 
+						 things.push(vesch);
+						 
+						 
+						
+                      });
+					  
+				if(regim=="r1"){show_massiv=[]; pos=0; show_frukt(-1);}
+				if(regim=="r2"){
+				    $("#words_r2").val("");
+		            $("#words_r2").show();
+		            $("#yes").show();
+		            $("#no").show();
+					show_frukt_r2();									
+					}
+					
+					
+				if(regim=="k"){
+				$("#check_answ").show();
+				$("#words_k").val("");
+				$("#words_k").show();
+				show_frukt_k();
+				}	
+				
+				/*	  alert(things[32].name);
+					  alert(things[32].pict);
+					  alert(things[32].sound_yes);
+					  alert(things[32].sound_yes.src);
+					  things[32].sound_yes.play();*/
+					  
+					  
+          } ;     
+  
+  
+  
+  };
+    
+  //конец получения xml
+  
+  //****************ВЫВОДИМ РАНДОМНО ФРУКТ*******функция для работы в режиме 1*********************
+  
+var show_massiv= new Array();//позиция предыдущего выкинутого 
+function show_frukt(which_show){
+	finish=false;
+	
+	for(var p=0;p<things.length;p++){
+	/*abrikos.visible=false;
+	ananas.visible=false;
+	apelsin.visible=false;*/
+	//trace(things[p].name+"="+things[p].see)
+	//things[p].pict.visible=false;
+	if (things[p].see==0) {finish=true;}
+	}	
+		
+	if(finish==true){
+		var k;
+		if (which_show==-1){
+		//=int(Math.random()*(answers.length-1));
+		
+		    do{
+			//k=int(Math.random()*(answers.length-1));
+			k=Math.round(Math.random()*(things.length-1));
+            }while (things[k].see==1)
+			
+			things[k].see=1;
+			show_massiv.push(k);
+			
+		} else {k=show_massiv[which_show];}
+		
+		
+		
+		 $("#opis_pict_r1").attr("src",things[k].pict);//показываем фрукт
+		 $("#words_r1").val(things[k].name);//подписываем его название
+		 $("#name_arab_r1").attr("src",things[k].name_arab);//подписываем название фрукта на арабском
+		 
+		 if(sessionStorage.getItem("papka")=="professii"){kto_eto.play();}else{chto_eto.play();}//спрашиваем что это
+        // setTimeout(function() { things[k].sound_yes.play(); }, 4000)//произносим название фрукта
+		
+		 talk_name = setTimeout(function() {things[k].sound_yes.play();}, 2000);//произносим название фрукта
+		
+	}
+	
+	
+	if(finish==false){
+		//clearInterval(timerId);
+		
+		$("#frw").attr("src","pict/forw_stop.png");//вперед некуда
+       // $("document").off("vmousedown","#frw");
+		
+		//отключаем сигналы мыши
+		$("#frw").css("pointer-events", "none");
+       // возвращаем сигналы мышы
+      // $("#buttonId").css("pointer-events", "auto");
+
+		
+		/*$("#words_r1").val("");
+		$("#words_r1").hide();
+		$("#name_arab_r1").attr("src","");*/
+		
+		
+		//return k;
+	}
+		
+	
+}
+
+//******************************************************************************************************  
+  
+  
+  
+  
+ //********************************ВЫВОДИМ РАНДОМНО ФРУКТ и РАНДОМНО ВЫВОДИМ НАЗВАНИЕ для режима 2
+function show_frukt_r2(){
+	
+	var veroyatnost;
+	//возобновляем активность кнопок
+    $("#yes").show();
+    $("#no").show();
+ /*$(document).off('click', '#yes');
+ $(document).off('click', '#no');*/
+	
+	finish=false;
+	for(p=0;p<things.length;p++){
+	 if (things[p].see==0) {finish=true;}
+	}	
+		
+	if(finish==true){
+		
+	
+		var k;//=int(Math.random()*(answers.length-1));
+		var k1;
+		    do{
+			//k=int(Math.random()*(answers.length-1));
+			k=Math.round(Math.random()*(things.length-1));
+            }while (things[k].see==1)
+			
+			do{
+			k1=Math.round(Math.random()*(things.length-1));
+			}while (k1==k)
+			
+			
+		 things[k].see=1;
+		 $("#opis_pict_r2").attr("src",things[k].pict);//показываем фрукт
+		 $("#name_arab_r2").attr("src",things[k].name_arab);//подписываем его по-арабски
+		 
+		 if(sessionStorage.getItem("papka")=="professii"){kto_eto.play();}else{chto_eto.play();}//спрашиваем что это
+		 
+		 
+		 veroyatnost=Math.round(Math.random()*10);
+		 
+		 //>4
+		 if (veroyatnost>4){
+		 $("#words_r2").val("Это "+things[k1].name+"?");//подписываем рандомное название фрукта по-русски	
+		}
+		
+		 //<=4
+		 if (veroyatnost<5){		 
+		 $("#words_r2").val("Это "+things[k].name+"?");//подписываем верное название фрукта по-русски
+		}
+		
+	}
+	
+	
+	if(finish==false){
+		$("#words_r2").val("");
+		$("#words_r2").hide();
+		$("#name_arab_r2").attr("src","");
+		$("#yes").hide();
+		$("#no").hide();
+	}
+			
+}
+//******************************************************************************************************** 
+  
+  
+  
+//**********************************************ВЫВОДИМ РАНДОМНО ФРУКТ - режим КОНТРОЛЬ**********************
+function show_frukt_k(){
+	finish=false;
+	
+	for(p=0;p<things.length;p++){
+		
+	if (things[p].see==0) {finish=true;}
+	}	
+		
+	if(finish==true){
+		
+		
+		var k;
+		
+		    do{
+			  k=Math.round(Math.random()*(things.length-1));
+            }while (things[k].see==1)
+		
+		if(sessionStorage.getItem("papka")=="professii"){kto_eto.play();}else{chto_eto.play();}//спрашиваем что это
+		
+		 
+		 $("#opis_pict_k").attr("src",things[k].pict);
+	     $("#name_arab_k").attr("src",things[k].name_arab);
+	     $("#words_k").val("");
+	 
+	  checker=false;	
+	}
+	
+	
+	if(finish==false){
+		
+		$("#check_answ").hide();
+		$("#name_arab_k").attr("src","");
+		$("#words_k").val("");
+		$("#words_k").hide();
+		
+		
+		}
+
+	}
+
+//**********************************************************************************************************
+
+  
+  
+  
+  
+  
+  
+  //при загрузке Есть хочется
+			
+	/*$(function(){	
+	$('#r1').live('pageshow',function(event, ui){					
+				
+get_xml("est_hochetsya");
+				
+	});	
+	
+  });
+  */
+  
+  
+  
+  
+      $(document).on("pagebeforeshow","#main_page",function() {
+   // $("#menu_eda").show();
+	//get_xml("est_hochetsya");
+  
+  //xml=getXMLDocument("xml/"+folder+"/config.xml");
+   
+    // $("#menu_eda_zag").off('click').click(function() {          
+	
+	
+	//*********************Раскрывающийся список для темы Есть хочется********************************
+	 $(document).off('click', '#menu_eda_zag').on('click', '#menu_eda_zag',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_eda").is(":hidden")){		     
+		  	  $("#menu_eda").show();}else
+			  
+			  {if($("#menu_eda").is(":visible")){			 
+			  $("#menu_eda").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	
+
+//*********************Раскрывающийся список для темы Школа********************************
+	 $(document).off('click', '#menu_school_zag').on('click', '#menu_school_zag',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_school").is(":hidden")){		     
+		  	  $("#menu_school").show();}else
+			  
+			  {if($("#menu_school").is(":visible")){			 
+			  $("#menu_school").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	
+	
+	
+	//*********************Раскрывающийся список для темы На прогулке********************************
+	 $(document).off('click', '#menu_na_progulke_zag').on('click', '#menu_na_progulke_zag',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_na_progulke").is(":hidden")){		     
+		  	  $("#menu_na_progulke").show();}else
+			  
+			  {if($("#menu_na_progulke").is(":visible")){			 
+			  $("#menu_na_progulke").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	
+	
+	//*********************Раскрывающийся список для темы Дома и в гостях********************************
+	 $(document).off('click', '#menu_doma_i_v_gostyah_zag').on('click', '#menu_doma_i_v_gostyah_zag',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_doma_i_v_gostyah").is(":hidden")){		     
+		  	  $("#menu_doma_i_v_gostyah").show();}else
+			  
+			  {if($("#menu_doma_i_v_gostyah").is(":visible")){			 
+			  $("#menu_doma_i_v_gostyah").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	
+	
+	//*********************Раскрывающийся список для темы Профессии********************************
+	 $(document).off('click', '#menu_professii_zag').on('click', '#menu_professii_zag',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_professii").is(":hidden")){		     
+		  	  $("#menu_professii").show();}else
+			  
+			  {if($("#menu_professii").is(":visible")){			 
+			  $("#menu_professii").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+
+
+
+	
+	  //****************Ссылаемся на режимы темы Есть хочется*************************************************** 
+	   
+	   $(document).on('click', "#r1_eda",function () {
+               
+			   sessionStorage.zagolovok="Есть хочется - Режим 1";
+               sessionStorage.papka="est_hochetsya";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#r2_eda",function () {
+               
+			   sessionStorage.zagolovok="Есть хочется - Режим 2";
+               sessionStorage.papka="est_hochetsya";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#k_eda",function () {
+               
+			   sessionStorage.zagolovok="Есть хочется - Контроль";
+               sessionStorage.papka="est_hochetsya";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+
+	//*****************************************************************************************************
+		
+	 
+  //****************Ссылаемся на режимы темы Школа*************************************************** 
+	   
+	   $(document).on('click', "#r1_school",function () {
+               
+			   sessionStorage.zagolovok="Школа - Режим 1";
+               sessionStorage.papka="school";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#r2_school",function () {
+               
+			   sessionStorage.zagolovok="Школа - Режим 2";
+               sessionStorage.papka="school";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#k_school",function () {
+               
+			   sessionStorage.zagolovok="Школа - Контроль";
+               sessionStorage.papka="school";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+
+	//*****************************************************************************************************
+	
+	
+	
+	
+	//****************Ссылаемся на режимы темы На прогулке*************************************************** 
+	   
+	   $(document).on('click', "#r1_na_progulke",function () {
+               
+			   sessionStorage.zagolovok="На прогулке - Режим 1";
+               sessionStorage.papka="na_progulke";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#r2_na_progulke",function () {
+               
+			   sessionStorage.zagolovok="На прогулке - Режим 2";
+               sessionStorage.papka="na_progulke";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#k_na_progulke",function () {
+               
+			   sessionStorage.zagolovok="На прогулке - Контроль";
+               sessionStorage.papka="na_progulke";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+
+	//*****************************************************************************************************
+	
+	
+	
+	//****************Ссылаемся на режимы темы Дома и в гостях*************************************************** 
+	   
+	   $(document).on('click', "#r1_doma_i_v_gostyah",function () {
+               
+			   sessionStorage.zagolovok="Дома и в гостях - Режим 1";
+               sessionStorage.papka="doma_i_v_gostyah";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#r2_doma_i_v_gostyah",function () {
+               
+			   sessionStorage.zagolovok="Дома и в гостях - Режим 2";
+               sessionStorage.papka="doma_i_v_gostyah";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#k_doma_i_v_gostyah",function () {
+               
+			   sessionStorage.zagolovok="Дома и в гостях - Контроль";
+               sessionStorage.papka="doma_i_v_gostyah";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+
+	//*****************************************************************************************************
+	
+	
+	
+	//****************Ссылаемся на режимы темы Профессии*************************************************** 
+	   
+	   $(document).on('click', "#r1_professii",function () {
+               
+			   sessionStorage.zagolovok="Профессии - Режим 1";
+               sessionStorage.papka="professii";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#r2_professii",function () {
+               
+			   sessionStorage.zagolovok="Профессии - Режим 2";
+               sessionStorage.papka="professii";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+		
+		$(document).on('click', "#k_professii",function () {
+               
+			   sessionStorage.zagolovok="Профессии - Контроль";
+               sessionStorage.papka="professii";
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        });
+
+	//*****************************************************************************************************
+
+	 
+	});
+   
+   
+   
+   //***************************Обработка РЕЖИМ 1***********************************************************
+      $(document).on('pagebeforeshow', "#r1",function () {
+           
+		   $("#r1_zag").text(sessionStorage.getItem("zagolovok"));
+		    $("#r1_arab_zag").attr("src","pict/"+sessionStorage.getItem("papka")+".gif");
+		   get_xml(sessionStorage.getItem("papka"),"r1");
+		   
+		   //*******делаем эффект нажатия, заменяя кнопку назад(без тени) на назад(с тенью ) при нажатии и отпускании *****************
+		   
+		     $(document).off('vmousedown', '#back').on('vmousedown', '#back',function(e) {
+			 
+			 $(this).attr("src","pict/back.png");
+		   
+		     }); 
+			 
+			 
+			 $(document).off('vmouseup', '#back').on('vmouseup', '#back',function(e) {
+			 
+			 $(this).attr("src","pict/back_shadow.png");
+		   
+		     }); 
+			 
+			 
+			//**********************************************************************************
+
+			
+			 //*******делаем эффект нажатия, заменяя кнопку вперед(без тени) на вперед(с тенью ) при нажатии и отпускании *****************
+		   
+		     $(document).off('vmousedown', '#frw').on('vmousedown', '#frw',function(e) {
+			 
+			 $(this).attr("src","pict/forw.png");
+		   
+		     }); 
+			 
+			 
+			 $(document).off('vmouseup', '#frw').on('vmouseup', '#frw',function(e) {
+			 
+			 $(this).attr("src","pict/forw_shadow.png");
+		   
+		     }); 
+			 
+			 
+			//**********************************************************************************
+			
+			//*******делаем эффект нажатия, заменяя кнопку обновить(без тени) на обновить(с тенью ) при нажатии и отпускании *****************
+		   
+		     $(document).off('vmousedown', '#rld').on('vmousedown', '#rld',function(e) {
+			 
+			 $(this).attr("src","pict/reload.png");
+		   
+		     }); 
+			 
+			 
+			 $(document).off('vmouseup', '#rld').on('vmouseup', '#rld',function(e) {
+			 
+			 $(this).attr("src","pict/reload_shadow.png");
+		   
+		     }); 
+			 
+			 
+			//**********************************************************************************
+			 
+		  //***************************на стрелку назад (back)*****************************************   
+		    $(document).off('click', '#back').on('click', '#back',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			//SoundMixer.stopAll();
+            clearTimeout(talk_name);
+            if(pos!=0) {pos=pos-1;}
+			if(pos!=0){off_sound(pos+1);}else {off_sound(pos);}
+            show_frukt(pos);			  
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+    
+	
+       //***************************на стрелку вперед (frw)*****************************************   
+		    $(document).off('click', '#frw').on('click', '#frw',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			//SoundMixer.stopAll();
+            clearTimeout(talk_name);
+	        pos=pos+1;	
+           if(pos==show_massiv.length&&pos<things.length){	
+	          off_sound(pos-1);
+			  show_frukt(-1);
+              			  
+	          }else	{if(pos==things.length){pos=pos-1;off_sound(pos);} show_frukt(pos);}			  
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************	
+	  
+	//***************************на повторить (rld)*****************************************   
+		    $(document).off('click', '#rld').on('click', '#rld',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			//SoundMixer.stopAll();
+            clearTimeout(talk_name);	            	
+	        off_sound(pos);
+			show_frukt(pos);		         
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************	
+	
+	
+	
+	
+		   
+		   /* var parameters = $(this).data("url").split("?")[1];;
+            parameter = parameters.replace("parameter=","");
+            alert(parameter);*/
+        });
+  
+  
+  //*****************************************конец Режим1***********************************************************
+  
+  
+   //***************************Обработка РЕЖИМ 2***********************************************************
+      $(document).on('pagebeforeshow', "#r2",function () {
+           
+		   $("#r2_zag").text(sessionStorage.getItem("zagolovok"));
+		   $("#r2_arab_zag").attr("src","pict/"+sessionStorage.getItem("papka")+".gif");
+		   get_xml(sessionStorage.getItem("papka"),"r2");
+		   /* var parameters = $(this).data("url").split("?")[1];;
+            parameter = parameters.replace("parameter=","");
+            alert(parameter);*/
+			
+		
+		
+		//*******делаем эффект нажатия, заменяя кнопку да(без тени) на да(с тенью ) при нажатии и отпускании *****************
+		   
+		     $(document).off('vmousedown', '#yes').on('vmousedown', '#yes',function(e) {
+			 
+			 $(this).attr("src","pict/yes50.png");
+		   
+		     }); 
+			 
+			 
+			 $(document).off('vmouseup', '#yes').on('vmouseup', '#yes',function(e) {
+			 
+			 $(this).attr("src","pict/yes50_shadow.png");
+		   
+		     }); 
+			 
+			 
+			//**********************************************************************************
+		
+		
+          //*******делаем эффект нажатия, заменяя кнопку нет(без тени) на нет(с тенью ) при нажатии и отпускании *****************
+		   
+		     $(document).off('vmousedown', '#no').on('vmousedown', '#no',function(e) {
+			 
+			 $(this).attr("src","pict/no50.png");
+		   
+		     }); 
+			 
+			 
+			 $(document).off('vmouseup', '#no').on('vmouseup', '#no',function(e) {
+			 
+			 $(this).attr("src","pict/no50_shadow.png");
+		   
+		     }); 
+			 
+			 
+			//**********************************************************************************		
+		
+		
+		
+		//***************************жмем на кнопку да*****************************************   
+	    $(document).off('click', '#yes').on('click', '#yes',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+          {
+           // alert('Clicked');
+            e.handled = true;
+			/*off_sound(numb_of_visible1);
+			off_sound(numb_of_name);*/
+			
+			var numb_of_visible1;
+            var numb_of_name;
+
+			//чтобы еще раз не нажали
+			 $("#yes").hide();
+		     $("#no").hide();
+             
+
+         for(ii= 0; ii < things.length; ii++){
+                if (things[ii].pict==$("#opis_pict_r2").attr("src")){
+		             numb_of_visible1=ii;		  
+	             } 
+		
+		if ("Это "+things[ii].name+"?"==$("#words_r2").val().replace( /^\s+|\s+$/g, '' )){
+		   	  numb_of_name=ii;		
+	    } 
+		
+	  
+     }
+
+    // answer.text.replace( /^\s+|\s+$/g, '' )==answers[m].name
+	 
+	         if($("#words_r2").val().replace( /^\s+|\s+$/g, '' )=="Это "+things[numb_of_visible1].name+"?"){
+			      //Правильный ответ!
+			      things[numb_of_visible1].see=1;
+			  
+			      da_pravilno.play();
+			      setTimeout(function() {things[numb_of_visible1].sound_yes.play();}, 3000);
+              }
+		
+		
+		     if($("#words_r2").val().replace( /^\s+|\s+$/g, '' )!="Это "+things[numb_of_visible1].name+"?"){
+			     //Ошибка!
+			     things[numb_of_visible1].see=1;
+			     things[numb_of_name].sound_no.play();
+			     setTimeout(function() {things[numb_of_visible1].sound_yes.play();}, 3000);
+              }
+		
+
+          setTimeout(function() {show_frukt_r2();}, 7000);
+		         
+			
+          }
+				  
+          }); 
+	  //**********************************************************************************************		
+			
+			
+		
+
+      //***************************жмем на кнопку нет*****************************************   
+		    $(document).off('click', '#no').on('click', '#no',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+		 /*off_sound(numb_of_visibl2);
+		 off_sound(numb_of_name1);*/
+		 
+          var numb_of_visible2;
+          var numb_of_name1;
+         
+		 //чтобы еще раз не нажали
+          $("#yes").hide();
+          $("#no").hide();
+
+ 
+          for(ii= 0; ii < things.length; ii++){
+                if (things[ii].pict==$("#opis_pict_r2").attr("src")){
+		             numb_of_visible2=ii;		  
+	             } 
+					
+					
+		        if ("Это "+things[ii].name+"?"==$("#words_r2").val().replace( /^\s+|\s+$/g, '' )){
+		  		       numb_of_name1=ii;		  
+	                } 	
+	  
+          }
+
+      if($("#words_r2").val().replace( /^\s+|\s+$/g, '' )!="Это "+things[numb_of_visible2].name+"?"){
+			  //Правильный ответ!
+			  things[numb_of_visible2].see=1;
+			 // answers[ numb_of_visible].ball=1;
+			 
+		          da_pravilno.play();
+				  
+			  setTimeout(function() {things[numb_of_visible2].sound_yes.play();}, 3000);
+        }
+		
+		
+		if($("#words_r2").val().replace( /^\s+|\s+$/g, '' )=="Это "+things[numb_of_visible2].name+"?"){
+			  //Ошибка!
+			  things[numb_of_visible2].see=1;
+			 // answers[ numb_of_visible].ball=1;
+		
+		          neverno.play();
+			 
+       		      setTimeout(function() {things[numb_of_visible2].sound_yes.play()}, 3000);
+			 // setTimeout(function() {root[answers[numb_of_visible].sound].play();}, 3000);
+        }
+
+        setTimeout(function() {show_frukt_r2();}, 7000);		
+		 
+         
+
+			
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************			
+	  		
+			
+			
+			
+			
+			
+        });
+  
+  
+  //********************************************************************************************************
+  
+   //***************************Обработка КОНТРОЛЬ***********************************************************
+      $(document).on('pagebeforeshow', "#k",function () {
+           
+		   $("#k_zag").text(sessionStorage.getItem("zagolovok"));
+		    $("#k_arab_zag").attr("src","pict/"+sessionStorage.getItem("papka")+".gif");
+		    get_xml(sessionStorage.getItem("papka"),"k");
+			
+			
+			//*******делаем эффект нажатия, заменяя кнопку подтвердить(без тени) на подтвердить(с тенью ) при нажатии и отпускании *****************
+		   
+		     $(document).off('vmousedown', '#check_answ').on('vmousedown', '#check_answ',function(e) {
+			 
+			 $(this).attr("src","pict/yes50.png");
+		   
+		     }); 
+			 
+			 
+			 $(document).off('vmouseup', '#check_answ').on('vmouseup', '#check_answ',function(e) {
+			 
+			 $(this).attr("src","pict/yes50_shadow.png");
+		   
+		     }); 
+			 
+			 
+			//**********************************************************************************
+			
+			
+			
+			
+			
+			$(document).off('click', '#check_answ').on('click', '#check_answ',function(e) {
+			if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+               {
+			   //answers.length
+
+			  /* off_sound(numb_of_visible);
+			   off_sound(numb_of_name);*/
+			   
+              var numb_of_visible;
+              var numb_of_name;
+
+              for(ii = 0; ii < things.length; ii++){
+    
+	             if ($("#opis_pict_k").attr("src")==things[ii].pict){ 
+		  		  numb_of_visible=ii;		  
+	               }
+	  
+	  
+	             if (things[ii].name==$("#words_k").val().replace( /^\s+|\s+$/g, '' )){
+		  		  numb_of_name=ii;		  
+	               }	   
+              }
+			  
+		      if($("#words_k").val().replace( /^\s+|\s+$/g, '' )==things[numb_of_visible].name){
+			  	  things[numb_of_visible].see=1;
+			      things[numb_of_visible].ball=1;
+			      da_pravilno.play();
+			      setTimeout(function() {things[numb_of_visible].sound_yes.play();}, 3000);
+			      setTimeout(show_frukt_k, 6000);
+		          }else{
+			        for(m = 0; m < things.length; m++){
+				        if($("#words_k").val().replace( /^\s+|\s+$/g, '' )==things[m].name){
+					        var rem_m=m;					 
+					        //things[numb_of_visible].pict.visible=false;					  
+					        $("#opis_pict_k").attr("src",things[m].pict);
+                            $("#name_arab_k").attr("src",things[m].name_arab);							
+					        things[numb_of_visible].see=1;					  
+					        things[numb_of_name].sound_no.play();					  
+					        setTimeout(function() {
+							 
+								 things[numb_of_visible].sound_yes.play();
+								// things[rem_m].pict.visible=false; 
+								 $("#opis_pict_k").attr("src",things[numb_of_visible].pict);
+								 $("#name_arab_k").attr("src",things[numb_of_visible].name_arab);
+								 $("#words_k").val(things[numb_of_visible].name);
+								 }, 3000);
+					  
+					       checker=true;
+					       setTimeout(show_frukt_k, 6000);					  
+					    }	  
+				  
+				    }
+			     if(!checker){
+			       schet=2; 
+			   
+			       switch (schet){
+				     case 1:
+				     answer.text="";				
+				     break;
+				 
+				     case 2:
+				     schet=0;
+				     $("#words_k").val(things[numb_of_visible].name);
+					 $("#name_arab_k").attr("src",things[numb_of_visible].name_arab);
+				     neverno.play();
+				 	 setTimeout(function() {things[numb_of_visible].sound_yes.play();}, 3000);
+				 	 things[numb_of_visible].see=1;
+					 setTimeout(show_frukt_k, 6000);
+				     break;		
+                   }  		 
+			    }
+			  // 
+			  }
+		  
+		  
+		//  }
+    
+
+			   
+			   
+			   }
+			
+			});
+			
+		   /* var parameters = $(this).data("url").split("?")[1];;
+            parameter = parameters.replace("parameter=","");
+            alert(parameter);*/
+        });
+  
+  
+  //********************************************************************************************************
+  
+  
+  </script>
+  
+  </head>
+  
+  
+  <body>
+   
+   <!-------------------------------------ОСНОВНАЯ СТРАНИЦА-------------------------------------------------->
+   <div data-role="page" id="main_page" data-theme="a">
+      
+	  <div data-role="header" >
+		<h1 id="twi_acc"><img  src="../pict/testsarab.gif" alt="Тесты"><br>Тесты</h1>
+		<a href="../index.html" rel="external" onclick="off_sound_back();" data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+	  </div>
+	  
+	  <div data-role="content">
+	  	  <!--Спрятанный список-->
+	<!--<div data-role="collapsible">
+	  <h2>Спрятанный список</h2>
+	  <ul data-role="listview" data-inset="true">
+	    <li>Один</li>
+	    <li>Два</li>
+	    <li>Три</li>
+	  </ul>
+	  </div>
+	   <div data-role="collapsible">
+	  <h2>Спрятанный список 2</h2>
+	  <ul data-role="listview" data-inset="true">
+	    <li>Один</li>
+	    <li>Два</li>
+	    <li>Три</li>
+	  </ul>
+	  </div>
+	  -->
+	     <ul data-role="listview" data-inset="true" data-theme="a">
+			
+			<li>
+			<a href="" id=menu_eda_zag><img  src="pict/Eating60.png" alt="Есть хочется"><img src="pict/est_hochetsya.gif"><p>Есть хочется</p></a>
+			  <ul style="display:none;" id=menu_eda  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=r1_eda href="#r1"><img style="margin-left: 17px;" src="pict/reg1_arab.gif" alt="Есть хочется - Режим 1">&nbsp;&nbsp;&nbsp;Режим 1</a></li>
+	            <li><a id=r2_eda href="#r2"><img style="margin-left: 17px;" src="pict/reg2_arab.gif" alt="Есть хочется - Режим 2">&nbsp;&nbsp;&nbsp;Режим 2</a></li>
+	            <li><a id=k_eda href="#k"><img style="margin-left: 17px;" src="../pict/calcontrol.gif" alt="Есть хочется - Контроль">&nbsp;&nbsp;&nbsp;Контроль</a></li>
+	          </ul>
+		    </li>
+			
+			
+			<li>
+			<a href="" id=menu_school_zag><img src="pict/School60.png" alt="Школа"><img src="pict/school.gif"><p>Школа</p></a>
+			<ul style="display:none;" id=menu_school  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=r1_school href="#r1"><img style="margin-left: 17px;" src="pict/reg1_arab.gif" alt="Школа - Режим 1">&nbsp;&nbsp;&nbsp;Режим 1</a></li>
+	            <li><a id=r2_school href="#r2"><img style="margin-left: 17px;" src="pict/reg2_arab.gif" alt="Школа - Режим 2">&nbsp;&nbsp;&nbsp;Режим 2</a></li>
+	            <li><a id=k_school href="#k"><img style="margin-left: 17px;" src="../pict/calcontrol.gif" alt="Школа - Контроль">&nbsp;&nbsp;&nbsp;Контроль</a></li>
+	          </ul>			
+			</li>
+			
+			<li>
+			<a href="" id=menu_na_progulke_zag><img src="pict/walk60.png" alt="На прогулке"><img src="pict/na_progulke.gif"><p>На прогулке</p></a>
+			<ul style="display:none;" id=menu_na_progulke  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=r1_na_progulke href="#r1"><img style="margin-left: 17px;" src="pict/reg1_arab.gif" alt="На прогулке - Режим 1">&nbsp;&nbsp;&nbsp;Режим 1</a></li>
+	            <li><a id=r2_na_progulke href="#r2"><img style="margin-left: 17px;" src="pict/reg2_arab.gif" alt="На прогулке - Режим 2">&nbsp;&nbsp;&nbsp;Режим 2</a></li>
+	            <li><a id=k_na_progulke href="#k"><img style="margin-left: 17px;" src="../pict/calcontrol.gif" alt="На прогулке - Контроль">&nbsp;&nbsp;&nbsp;Контроль</a></li>
+	          </ul>			
+			</li>
+			
+			
+			<li>
+			<a href="" id=menu_doma_i_v_gostyah_zag><img src="pict/House60.png" alt="Дома и в гостях"><img src="pict/doma_i_v_gostyah.gif"><p>Дома и в гостях</p></a>
+			<ul style="display:none;" id=menu_doma_i_v_gostyah  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=r1_doma_i_v_gostyah href="#r1"><img style="margin-left: 17px;" src="pict/reg1_arab.gif" alt="Дома и в гостях - Режим 1">&nbsp;&nbsp;&nbsp;Режим 1</a></li>
+	            <li><a id=r2_doma_i_v_gostyah href="#r2"><img style="margin-left: 17px;" src="pict/reg2_arab.gif" alt="Дома и в гостях - Режим 2">&nbsp;&nbsp;&nbsp;Режим 2</a></li>
+	            <li><a id=k_doma_i_v_gostyah href="#k"><img style="margin-left: 17px;" src="../pict/calcontrol.gif" alt="Дома и в гостях - Контроль">&nbsp;&nbsp;&nbsp;Контроль</a></li>
+	          </ul>			
+			</li>
+			
+			
+			<li>
+			<a href="" id=menu_professii_zag><img src="pict/Humans60.png" alt="Профессии"><img src="pict/professii.gif"><p>Профессии</p></a>
+			<ul style="display:none;" id=menu_professii  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=r1_professii href="#r1"><img style="margin-left: 17px;" src="pict/reg1_arab.gif" alt="Профессии - Режим 1">&nbsp;&nbsp;&nbsp;Режим 1</a></li>
+	            <li><a id=r2_professii href="#r2"><img style="margin-left: 17px;" src="pict/reg2_arab.gif" alt="Профессии - Режим 2">&nbsp;&nbsp;&nbsp;Режим 2</a></li>
+	            <li><a id=k_professii href="#k"><img style="margin-left: 17px;" src="../pict/calcontrol.gif" alt="Профессии - Контроль">&nbsp;&nbsp;&nbsp;Контроль</a></li>
+	          </ul>			
+			</li>
+			
+			<!--<li><a href="#professii"><img src="pict/Humans60.png" alt="Есть хочется" class="ui-li-icon">Профессии</a></li>-->
+			
+		</ul>	
+     </div>
+	 
+	 <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+   </div>
+   
+   <!-------------------------------------РЕЖИМ 1-------------------------------------------------->
+   <div data-role="page" id="r1" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><p><img src="" id=r1_arab_zag></p><p id=r1_zag>Есть хочется - Режим 1</p></h1>
+		<a href="#main_page"  onclick="off_sound_back();" data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	 <p style="text-align:center;"><img width=200 id=opis_pict_r1 src=""></p>
+	 
+	 <p style="text-align:center;"><img height=40 id=name_arab_r1 src=""></p>
+	 
+      <div data-role="fieldcontain" >					
+       <input class="ui-overlay-shadow" data-icon="edit" type="text" name="words_r1" id="words_r1" value=""  />	   
+	  </div>	
+     <!-- <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <button class="ui-btn">Предыдущее</button>
+		  <button class="ui-btn">Повторить</button>
+		  <button class="ui-btn">Следующее</button>
+	   </div>-->
+	   <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img id=back src="pict/back_shadow.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  <img id=rld src="pict/reload_shadow.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  <img id=frw src="pict/forw_shadow.png">
+	   </div>
+	   
+	   
+	  <!-- 
+	   <div data-role="navbar" >
+	      <ul>
+        <li><a href="#" data-icon="arrow-l"></a></li>
+        <li><a href="#" data-icon="refresh"></a></li>
+        <li><a href="#" data-icon="arrow-r"></a></li>
+      </ul>
+	   </div>-->
+	   
+   
+   
+   </div>
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+   </div>
+   
+   
+   <!-------------------------------------РЕЖИМ 2-------------------------------------------------->
+   <div data-role="page" id="r2" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><p><img src="" id=r2_arab_zag></p><p id=r2_zag>Есть хочется - Режим 2</p></h1>
+		<a href="#main_page" onclick="off_sound_back();" data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	 <p style="text-align:center;"><img width=200 id=opis_pict_r2 src=""></p>
+	 
+	 <p style="text-align:center;"><img height=40 id=name_arab_r2 src=""></p>
+	 
+      <div data-role="fieldcontain" >					
+       <input class="ui-overlay-shadow" data-icon="edit" type="text" name="words_r2" id="words_r2" value=""  />	   
+	  </div>	
+     <!-- <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <button class="ui-btn">Предыдущее</button>
+		  <button class="ui-btn">Повторить</button>
+		  <button class="ui-btn">Следующее</button>
+	   </div>-->
+	   
+	   <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img id=yes src="pict/yes50_shadow.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  <img id=no src="pict/no50_shadow.png">
+	  </div>
+	   
+	  <!-- 
+	   <div data-role="navbar" >
+	      <ul>
+        <li><a href="#" data-icon="check"></a></li>
+        <li><a href="#" data-icon="delete"></a></li>
+       
+      </ul>
+	   </div>
+	  --> 
+   </div>
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+   </div>
+   
+   <!-------------------------------------КОНТРОЛЬ-------------------------------------------------->
+   <div data-role="page" id="k" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><p><img src="" id=k_arab_zag></p><p id=k_zag>Есть хочется - Контроль</p></h1>
+		<a href="#main_page" onclick="off_sound_back();" data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	 <p style="text-align:center;"><img width=200 id=opis_pict_k src=""></p>
+	 
+	 <p style="text-align:center;"><img height=40 id=name_arab_k src=""></p>
+	 
+      <div data-role="fieldcontain" >					
+       <input class="ui-overlay-shadow" data-icon="edit" type="text" name="words_k" id="words_k" value=""  />	   
+	  </div>	
+     <!-- <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <button class="ui-btn">Предыдущее</button>
+		  <button class="ui-btn">Повторить</button>
+		  <button class="ui-btn">Следующее</button>
+	   </div>-->
+	   
+	 <p style="text-align:center;"><img id=check_answ src="pict/yes50_shadow.png"></p>
+	     
+	   
+	   
+   </div>
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+   </div>
+
+   
+   
+  </body>
+</html>

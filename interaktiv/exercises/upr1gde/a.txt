@@ -1,0 +1,10 @@
+<p>Составь предложения по образцам. Обращай внимание на то, с какими глаголами и с каким предлогом (В или НА) сочетаются разные слова.<br><b>А.</b> Где яблоки, в холодильнике? Куда ты положила яблоки, в холодильник?</p>
+Мама, где книга, на<input data-answ="столе" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(стол)?<br>
+Мама, куда ты положила книгу, на<input data-answ="стол" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(стол)?<br>
+Где лежат чашки, мама, в<input data-answ="буфете" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(буфет)?<br>Куда ты поставила чашки, мама, в<input data-answ="буфет" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(буфет)?<br>
+Мама, где моя куртка, на<input data-answ="вешалке" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(вешалка)?<br>
+Куда ты повесила мою куртку, мама, на<input data-answ="вешалку" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(вешалка)?<br>
+Мама, где картошка, в<input data-answ="холодильнике" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(холодильник)?<br>
+Мама, куда ты убрала картошку, в<input data-answ="холодильник" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(холодильник)?<br>
+Мама, где молоток, в<input data-answ="ящике" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(ящик) с инструментами?<br>
+Мама, куда ты убрала молоток, в<input data-answ="ящик" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>(ящик) с инструментами?

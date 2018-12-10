@@ -1,0 +1,9 @@
+<p><b><i>Согласование подлежащего и сказуемого.</i></b><br><b>Б.</b> Впишите вместо пропусков глаголы в нужной форме прошедшего времени.</p>
+Маша, ты (сделать)<input data-answ="сделала" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>вчерашнее домашнее задание по русскому языку?<br>
+Миша, ты ещё не (принести)<input data-answ="принёс" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>книгу, которую вчера мне (обещать)<input data-answ="обещал" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>?<br>
+Ирина Ивановна, вы уже (проверить)<input data-answ="проверили" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>наши сочинения?<br>
+Максим, ты ещё не (написать)<input data-answ="написал" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>сочинение к завтрашнему уроку?<br>
+Илья, ты вчера (попросить)<input data-answ="попросил" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>маму зайти к директору?<br>
+Оля, ты уже (узнать)<input data-answ="узнала" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>насчёт экскурсии?<br>
+Три дня назад мой брат (уехать)<input data-answ="уехал" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>в Арктику.<br>
+Когда-то мои родители много (путешествовать)<input data-answ="путешествовали" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/>по России.

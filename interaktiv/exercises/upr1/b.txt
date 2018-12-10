@@ -1,0 +1,72 @@
+<p><b><i>Согласование существительных с определениями.</i></b><br><b>Б.</b> Определите род существительного и поставьте местоимение <b>МОЙ</b> в нужную форму.</p> 
+		 
+		<table style="font-family: Arial;" width=100%> 
+		<tr>
+		 <td>
+	     <input data-answ="Моя" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>бабушка вкусно готовит.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Моя" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>тётя недавно вышла замуж.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Мои" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>бабушка и дедушка живут в другом городе.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Мой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>брат учится в десятом классе.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Моя" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>племянница похожа на свою маму.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Мой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>папа преподаёт в университете.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Моя" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>мама работает на радио.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Мои" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>дядя и тётя живут в Москве.</td>		   
+	    </tr>
+		
+		
+		<tr>
+		 <td> 
+	     <input data-answ="Мой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>дедушка пишет книгу.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Моя" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>сестра ходит в детский сад.</td>		   
+	    </tr>
+		
+		<tr>
+		 <td>
+	     <input data-answ="Мой" class="ui-overlay-shadow" data-icon="edit" type="text" name="" value=""  data-mini="true"/></td>
+	     <td>дядя работает за границей.</td>		   
+	    </tr>
+		
+		
+	   </table>

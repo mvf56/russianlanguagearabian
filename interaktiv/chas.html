@@ -1,0 +1,344 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes">	
+    <!-- Обрати внимание на эти три тега! Они нужны, чтобы страница адекватно выглядела на мобильном устройстве -->
+    <meta charset="UTF-8">
+   
+   <!--стили фреймворка jquery mobile-->
+       
+  <!-- <style type="text/css" media="screen">@import "js/jquery.mobile-1.4.5.min.css";</style> -->
+     <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
+   
+    <style>
+   
+  
+    </style>
+  
+
+  <script src="js/jquery-1.9.1.min.js"></script>
+   <script src="js/detect.min.js"></script>
+	
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+    </script>
+    
+	<script src="js/jquery.mobile-1.4.5.min.js" type="application/x-javascript" charset="utf-8"></script>
+  
+ 
+ 
+
+
+
+
+
+ <script>
+   
+     
+   
+
+   /*************************Проверка введенного времени*********************************************/
+
+function Checking(correct_time,chto_proveryaem,gmem){
+
+}
+
+
+/*************************конец проверка введенной даты************************************************/ 
+  
+  
+   
+  
+  
+  
+    
+  
+  
+  
+      $(document).on("pagebeforeshow","#main_page",function() {
+   
+ //ОБРАБАТЫВАЕМ КНОПКУ ПРОВЕРИТЬ - то есть осуществляем проверку введенного времени
+      $('.check_button').each(function(key, val){
+        //отпускание кнопки проверка
+        $(document).off('vmouseup', '#'+$(val).attr('id')).on('vmouseup', '#'+$(val).attr('id'),function(e) {
+            $(this).attr("src","pict/check.png");
+         });
+ 
+        //нажатие кнопки проверка 
+        $(document).off('vmousedown', '#'+$(val).attr('id')).on('vmousedown', '#'+$(val).attr('id'),function(e) {
+            $(this).attr("src","pict/check_on.png");
+		    //красим поля
+			if ($(this).data('answ')==$("#"+$(this).data('chto')).val().trim()){
+		      $("#"+$(this).data('chto')).attr("style","background: url('pict/gradient_green.png') right repeat-y");  
+		       }else{
+		         $("#"+$(this).data('chto')).attr("style","background: url('pict/gradient_red.png') right repeat-y");  
+		  
+		        }
+			
+			  //озвучиваем верно или нет
+			/*if ($(this).data('answ')==$("#"+$(this).data('chto')).val().trim()){
+             var da_say = new Audio();
+             da_say.preload = 'auto';
+             da_say.src = 'sounds/da_pravilno.mkv';
+             da_say.play();
+            }else{
+             var no_say = new Audio();
+             no_say.preload = 'auto';
+             no_say.src = 'sounds/nepravilno.mkv';
+             no_say.play();
+            }*/
+        });
+      });
+ 
+ 
+
+   
+	});
+   
+   
+   
+     
+  
+   
+  
+  </script>
+  
+  </head>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <body>
+   
+   <!-------------------------------------ОСНОВНАЯ СТРАНИЦА-------------------------------------------------->
+   <div data-role="page" id="main_page" data-theme="a">
+      
+	  <div data-role="header" >
+		<h1 id="twi_acc"><img  src="pict/chasarab.gif" alt="Глагол 'Быть'"><br>Который час?</h1>
+		<a href="index.html"   rel="external" data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+	  </div>
+	  
+	  <div data-role="content">
+	  	  
+	  <p><b>1.</b> Напиши, как ты ответишь на вопрос: <b>«Скажите, пожалуйста, который час?»</b>, если на твоём телефоне написано цифрами: 15.05.  Делай по образцу: <b>15.05 – Сейчас пятнадцать ноль пять.</b></p>   
+
+	 <table style="font-family: Arial; font-weight: bold;" width=100%>
+	 
+	 <tr>
+	  <td align=center >13.10</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time1z1" id="time1z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='тринадцать десять' data-chto='time1z1' src="pict/check.png" id=check_me0 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >7.00</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time2z1" id="time2z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='семь ноль-ноль' data-chto='time2z1' src="pict/check.png" id=check_me1 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >8.26</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time3z1" id="time3z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='восемь двадцать шесть' data-chto='time3z1' src="pict/check.png" id=check_me2 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >12.20</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time4z1" id="time4z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='двенадцать двадцать' data-chto='time4z1' src="pict/check.png" id=check_me3 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >16.45</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time5z1" id="time5z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='шестнадцать сорок пять' data-chto='time5z1' src="pict/check.png" id=check_me4 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >9.15</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time6z1" id="time6z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='девять пятнадцать' data-chto='time6z1' src="pict/check.png" id=check_me5 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >12.55</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time7z1" id="time7z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='двенадцать пятьдесят пять' data-chto='time7z1' src="pict/check.png" id=check_me6 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >18.30</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time8z1" id="time8z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='восемнадцать тридцать' data-chto='time8z1' src="pict/check.png" id=check_me7 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >21.08</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time9z1" id="time9z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='двадцать один ноль восемь' data-chto='time9z1' src="pict/check.png" id=check_me8 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >23.00</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time10z1" id="time10z1" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='двадцать три ноль-ноль' data-chto='time10z1' src="pict/check.png" id=check_me9 class="check_button"></td>	 
+	 </tr>	 
+	</table>
+	
+	
+	
+	
+	
+	 <p><b>2.</b> Напиши, как ты ответишь на вопрос: <b>«Скажите, пожалуйста, который час?»</b>, если на твоём телефоне написано цифрами: 15.05.  Делай по образцу: <b>15.05 – Сейчас пять минут четвёртого.</b></p>   
+
+	 <table style="font-family: Arial; font-weight: bold;" width=100%>
+	 
+	 <tr>
+	  <td align=center >13.10</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time1z2" id="time1z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='десять минут второго' data-chto='time1z2' src="pict/check.png" id=check_me10 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >7.14</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time2z2" id="time2z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='четырнадцать минут восьмого' data-chto='time2z2' src="pict/check.png" id=check_me11 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >8.26</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time3z2" id="time3z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='двадцать шесть минут девятого' data-chto='time3z2' src="pict/check.png" id=check_me12 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >12.20</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time4z2" id="time4z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='двадцать минут первого' data-chto='time4z2' src="pict/check.png" id=check_me13 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >16.15</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time5z2" id="time5z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='пятнадцать минут пятого' data-chto='time5z2' src="pict/check.png" id=check_me14 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >9.15</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time6z2" id="time6z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='пятнадцать минут десятого' data-chto='time6z2' src="pict/check.png" id=check_me15 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >12.25</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time7z2" id="time7z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='двадцать пять минут первого' data-chto='time7z2' src="pict/check.png" id=check_me16 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >18.17</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time8z2" id="time8z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='семнадцать минут седьмого' data-chto='time8z2' src="pict/check.png" id=check_me17 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >21.08</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time9z2" id="time9z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='восемь минут десятого' data-chto='time9z2' src="pict/check.png" id=check_me18 class="check_button"></td>	 
+	 </tr>
+	 
+	 <tr>
+	  <td align=center >23.05</td>
+	 <td > <div data-role="fieldcontain" >					    
+		<input class="ui-overlay-shadow" data-icon="edit" type="text" name="time10z2" id="time10z2" value=""  />	   
+	  </div>
+     </td>
+	 <td><img width=148 data-answ='пять минут двенадцатого' data-chto='time10z2' src="pict/check.png" id=check_me19 class="check_button"></td>	 
+	 </tr>	 
+	</table>
+		 
+     </div>
+	 
+	 <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+   </div>
+   
+   
+   
+    
+   
+  </body>
+</html>

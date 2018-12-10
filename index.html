@@ -1,0 +1,994 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes">	
+    <!-- Обрати внимание на эти три тега! Они нужны, чтобы страница адекватно выглядела на мобильном устройстве -->
+    <meta charset="UTF-8">
+   
+   <!--стили фреймворка jquery mobile-->
+       
+  <!-- <style type="text/css" media="screen">@import "js/jquery.mobile-1.4.5.min.css";</style> -->
+     <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
+   
+    <style>
+   TABLE.kalendar {
+     font-family: Arial;
+     font-weight: bold;
+     background-color:#a8bbb0;
+     border-collapse: collapse; /* Убираем двойные линии между ячейками */
+     border: 2px solid #717374;
+    //text-align:center;
+    width: 385px;
+   }
+
+   TABLE.kalendar TR, TABLE.kalendar TD {
+    //position:relative;
+   height:55px;
+   width:55px;
+   border: 1px solid #717374;
+   text-align:center;
+   vertical-align:center;
+   padding-top:0px;
+  }
+  
+    </style>
+  
+
+  <script src="js/jquery-1.9.1.min.js"></script>
+   <script src="js/detect.min.js"></script>
+	
+	<script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+    </script>
+    
+	<script src="js/jquery.mobile-1.4.5.min.js" type="application/x-javascript" charset="utf-8"></script>
+  
+ 
+ 
+
+
+
+
+
+ <script>
+ 
+    //дата на проверку
+     var correct_date="";
+   //массивы написания дат
+    var dates_writing_edin=["первое","второе","третье","четвёртое","пятое","шестое","седьмое","восьмое","девятое"];
+    var dates_writing_desyatki_small=["одиннадцатое","двенадцатое","тринадцатое","четырнадцатое","пятнадцатое","шестнадцатое","семнадцатое","восемнадцатое","девятнадцатое"];
+    var dates_writing_celie_desyatki=["десятое","двадцатое","тридцатое"];
+    var dates_writing_desyatki=["двадцать","тридцать"];
+
+    //массив родительных падежей месяцев
+    var month_rod=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+   
+   
+   var video;
+   var pict_of_present=new Array();
+   var alphabet=["А","Б","В","Г","Д","Е","Ё","Ж","З","И","Й","К","Л","М","Н","О","П","Р","С","Т","У","Ф","Х","Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я"];
+  
+   
+   
+   //описываем наше видео
+   //var presentation_video= new Video();
+		 //chto_eto.type="audio/mpeg";
+		// chto_eto.preload = 'auto';		 
+       //  chto_eto.src ="sounds/chto.ogg";
+		 
+   
+
+   //отключаем все видео звук при возвращении на титул
+   function off_video_back(){
+   /*for(s=0;s<things.length; s++){things[s].sound_yes.pause();things[s].sound_no.pause();}
+   things=[];
+   chto_eto.pause();
+   kto_eto.pause(); 
+   da_pravilno.pause();
+      */
+	  
+	 /* video.pause();
+	  $("#video").attr("src","");*/
+	
+   pict_of_present=[];
+	
+   }
+   
+    
+   
+
+
+  
+  //****************Вывод презентации*********************
+   
+   function show_present(which_show, how_many){
+   
+                    
+					for(i=0; i< parseInt(how_many); i++){
+					
+					pict_of_present[i]="slide"+i+".GIF";
+					
+					}
+					
+ 
+     /*video =  document.getElementById("video");
+	var ua = detect.parse(navigator.userAgent);
+      if ( ua.os.family === 'Android' ) {//ставим управляющие кнопки для видео, если Android
+          video.setAttribute( 'controls','controls' );
+        }
+	
+	   //$("#video > source[0]").attr("src","presentations/knowatoya/"+which_show)
+	    $("#video").attr("src","presentations/"+which_show);
+	   video.addEventListener('click',function(){
+      video.play();
+    },false);		
+	*/
+    }
+
+//******************************************************************************************************  
+  
+  /********************************изменение цвета ячеек календаря при нажатии в режиме обучения*********************/
+
+      function change_color(yacheika){
+
+
+
+       var tbls = document.getElementById("table_kalendar");
+
+
+       for (var r=0; r<tbls.rows.length; r++) {
+       // последовательнный перебор всех рядов в каждой таблице
+    
+           tbls.rows[r].style.background = "#a8bbb0";
+           tbls.rows[r].style.color = "#000";
+    
+       for (var c=0; c<tbls.rows[r].cells.length; c++) {
+        // последовательный перебор всех ячеек
+        var cls = tbls.rows[r].cells[c];        
+        cls.style.background = "#a8bbb0";
+        cls.style.color = "#000";
+       }
+      }
+ 
+      yacheika.style.background="#92a198";
+
+      var celoe = Math.floor( yacheika.id/10);
+
+      var edinica=yacheika.id%10;
+
+ 
+     //формируем и выводим дату
+    if((celoe==0||celoe>=2)&&edinica!=0){
+     if(celoe==0){
+      $("#input_date").val(dates_writing_edin[edinica-1]);
+	  }else{
+	    $("#input_date").val(dates_writing_desyatki[celoe-2]+" "+dates_writing_edin[edinica-1]);
+	  }
+    }
+ 
+    if (celoe==1){
+      $("#input_date").val(dates_writing_desyatki_small[edinica-1]);
+     }
+	 
+    if (edinica==0){
+      $("#input_date").val(dates_writing_celie_desyatki[celoe-1]);
+    }
+ 
+ 
+    //дописываем месяц в родительном падеже
+ 
+    $("#input_date").val($("#input_date").val()+" "+month_rod[document.getElementById('month').selectedIndex-1]);
+
+    //произносим число и месяц 
+    var date_say = new Audio();
+    date_say.preload = 'auto';
+    date_say.src = 'calendar/obuchenie/sounds/dates/'+yacheika.id+'.mp3';
+    date_say.play();
+
+    var month_rod_say=new Audio();
+    month_rod_say.preload = 'auto';
+    month_rod_say.src = 'calendar/obuchenie/sounds/month_rod/'+document.getElementById('month').selectedIndex+'.mp3';
+
+    setTimeout(function() { month_rod_say.play();}, 1500);
+}
+
+/***************конец изменение цвета ячеек календаря при нажатии в режиме обучение*********************************/
+   
+  
+
+
+/**********************************изменение цвета ячеек календаря при нажатии в режиме контроль *******************/
+
+function change_color_k(yacheika){
+
+$('#lamp_reaction').attr("src","calendar/control/pict/lamp_no.png");
+$("#input_date_k").val("");
+
+var tbls = document.getElementById("table_kalendar_k");
+
+
+for (var r=0; r<tbls.rows.length; r++) {
+  // последовательнный перебор всех рядов в каждой таблице
+    
+      tbls.rows[r].style.background = "#a8bbb0";
+      tbls.rows[r].style.color = "#000";
+    
+    for (var c=0; c<tbls.rows[r].cells.length; c++) {
+    // последовательный перебор всех ячеек
+      var cls = tbls.rows[r].cells[c];        
+         cls.style.background = "#a8bbb0";
+        cls.style.color = "#000";
+      }
+    }
+ 
+ yacheika.style.background="#92a198";
+
+ var celoe = Math.floor( parseFloat(yacheika.id)/10);
+
+ var edinica=parseFloat(yacheika.id)%10;
+
+ 
+ //формируем дату
+ if((celoe==0||celoe>=2)&&edinica!=0){
+  if(celoe==0){
+       correct_date=dates_writing_edin[edinica-1];
+	 }else{
+	      correct_date=dates_writing_desyatki[celoe-2]+" "+dates_writing_edin[edinica-1];
+	 }
+ }
+ 
+ if (celoe==1){
+  correct_date=dates_writing_desyatki_small[edinica-1];
+ 
+ }
+ if (edinica==0){
+   correct_date=dates_writing_celie_desyatki[celoe-1];
+ }
+ 
+ 
+ //дописываем месяц в родительном падеже
+ 
+   correct_date=correct_date+" "+month_rod[document.getElementById('month_k').selectedIndex-1];
+
+//произносим число и месяц 
+var date_say = new Audio();
+date_say.preload = 'auto';
+date_say.src = 'calendar/control/sounds/dates/'+parseFloat(yacheika.id)+'.mp3';
+date_say.play();
+
+var month_rod_say=new Audio();
+month_rod_say.preload = 'auto';
+month_rod_say.src = 'calendar/control/sounds/month_rod/'+document.getElementById('month_k').selectedIndex+'.mp3';
+
+setTimeout(function() { month_rod_say.play();}, 1500);
+
+}
+
+/**********конец изменение цвета ячеек календаря при нажатии в режиме контроль*************************************/
+  
+  
+  
+ /*************************Проверка введенной даты*********************************************/
+
+function Checking(){
+$('#check_button').attr("src","calendar/control/pict/check_on.png");
+
+if (correct_date==$("#input_date_k").val().trim()){
+$('#lamp_reaction').attr("src","calendar/control/pict/lamp_green.png");
+var da_say = new Audio();
+da_say.preload = 'auto';
+da_say.src = 'calendar/control/sounds/da_pravilno.mp3';
+da_say.play();
+
+}else{
+$('#lamp_reaction').attr("src","calendar/control/pict/lamp_red.png");
+var no_say = new Audio();
+no_say.preload = 'auto';
+no_say.src = 'calendar/control/sounds/nepravilno.mp3';
+no_say.play();
+}
+}
+
+
+/*************************конец проверка введенной даты************************************************/ 
+  
+  
+  
+  //при загрузке Есть хочется
+			
+	/*$(function(){	
+	$('#r1').live('pageshow',function(event, ui){					
+				
+get_xml("est_hochetsya");
+				
+	});	
+	
+  });
+  */
+  
+  
+  
+  
+      $(document).on("pagebeforeshow","#main_page",function() {
+   // $("#menu_eda").show();
+	//get_xml("est_hochetsya");
+  
+  //xml=getXMLDocument("xml/"+folder+"/config.xml");
+   
+    // $("#menu_eda_zag").off('click').click(function() {          
+	
+	
+	//*********************Раскрывающийся список Знаю от А до Я********************************
+	 $(document).off('click', '#knowatoya').on('click', '#knowatoya',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_knowatoya").is(":hidden")){		     
+		  	  $("#menu_knowatoya").show();}else
+			  
+			  {if($("#menu_knowatoya").is(":visible")){			 
+			  $("#menu_knowatoya").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	
+
+	//*********************Раскрывающийся список Интерактивный календарь********************************
+	 $(document).off('click', '#calendar').on('click', '#calendar',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			if($("#menu_calendar").is(":hidden")){		     
+		  	  $("#menu_calendar").show();}else
+			  
+			  {if($("#menu_calendar").is(":visible")){			 
+			  $("#menu_calendar").hide(); }
+			  	  
+			
+        }
+		  
+	  }
+		  
+        }); 
+	//*******************************************************************************************************	
+	
+	
+	
+	
+
+
+
+	
+	  //****************Ссылаемся на страницу с презентацией темы Знаю от А до Я************************** 
+  
+    for(i=0;i<alphabet.length;i++){  
+	 if ($("#let"+i).length){ 
+	  
+	   $(document).off('click', "#let"+i).on('click', "#let"+i,function (e) {
+               
+		if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;	  
+			   sessionStorage.zagolovok="<img  src='pict/knowatoyaarab.gif' alt='Знаю всё от А до Я'><br>Знаю всё от А до Я - "+$(this).text();
+               sessionStorage.papka="knowatoya/"+$(this).attr("id")+"/";
+			   sessionStorage.howmany=$(this).data("kolvo");
+				
+				/*$.mobile.changePage('r1.html', { dataUrl : "r1.html?paremeter=123", data : { 'paremeter' : '123' }, reloadPage : false, changeHash : true });*/
+        
+		}
+		});
+	
+	 }
+     }
+	//*****************************************************************************************************
+		
+	
+	//****************Ссылаемся на страницу Календаря с режимом обучения************************** 
+  
+    
+	   	 $(document).off('click', '#calobuchenie').on('click', '#calobuchenie',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			 sessionStorage.zagolovok="<img  src='pict/calendararab.gif' alt='Интерактивный календарь'><br>Интерактивный календарь - Обучение";
+             sessionStorage.papka="calendar/";
+			  	  
+			
+        }
+		  
+	  
+		  
+        }); 
+	//*****************************************************************************************************
+	
+	
+	
+	//****************Ссылаемся на страницу Календаря с режимом контроль************************** 
+  
+    
+	   	 $(document).off('click', '#calkontrol').on('click', '#calkontrol',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			 sessionStorage.zagolovok="<img  src='pict/calendararab.gif' alt='Интерактивный календарь'><br>Интерактивный календарь - Контроль";
+             sessionStorage.papka="calendar/";
+			  	  
+			
+        }
+		  
+	  
+		  
+        }); 
+	//*****************************************************************************************************
+	
+	
+	
+	
+	 //****************Ссылаемся на страницу с презентацией темы Я шагаю по Москве************************** 
+  
+    
+	  
+	   	 $(document).off('click', '#moscow').on('click', '#moscow',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			 sessionStorage.zagolovok="<img  src='pict/kremlinarab.gif' alt='Я шагаю по Москве'><br>Я шагаю по Москве";
+             sessionStorage.papka="moscow/";
+			 sessionStorage.howmany=$(this).data("kolvo");
+			  	  
+			
+        }
+		  
+	  
+		  
+        }); 
+		
+     
+	//*****************************************************************************************************
+	
+	
+	
+  
+
+	 
+	});
+	
+   
+   
+    //***************************Обработка календаря режима обучения***********************************************
+      $(document).on('pagebeforeshow', "#calobuch",function () {
+    $("#zag_cal").html(sessionStorage.getItem("zagolovok"));
+	
+	 //обнуляем: очищаем таблицу, поле
+	       document.getElementById('month').selectedIndex=0;
+           $("#input_date").val("");
+ 
+           $('#table_kalendar').html("");
+	
+   
+    /********************************Отрисовка календаря режим Обучения*********************************************/
+
+    $('#month').change( function ( ){
+ 
+      var b="";
+      var check_begin= 1;
+      var check_end= document.getElementById("month").value;
+      var tdc=1;
+ 
+      var month_say = new Audio();
+      month_say.preload = 'auto';
+      month_say.src = 'calendar/obuchenie/sounds/month/'+document.getElementById('month').selectedIndex+'.mp3';
+      month_say.play();
+ 
+      $("#input_date").val("");
+ 
+      $('#table_kalendar').html("");
+  
+  
+  
+        do {
+          b+="<tr>";
+ 
+          for(i=0;i<7;i++)
+          {
+           if(check_begin<=check_end)
+            {
+             b+="<td id="+tdc+" onclick='change_color(this);' style='background-color:#a8bbb0;'>"+check_begin+"</td>";
+             tdc++;
+             check_begin++;
+            }
+           else {b+="<td></td>";}
+   
+          }  
+ 
+        b+="</tr>";
+        } while (check_begin<=check_end)
+ 
+
+
+     $('#table_kalendar').append(b);
+  
+  
+    });
+
+/********************************конец Отрисовка календаря****************************************************************/   
+   
+   
+   
+   
+     });
+   
+   //*********************************************************************************************************
+   
+   
+   //***************************Обработка календаря режима контроль***********************************************
+      $(document).on('pagebeforeshow', "#calk",function () {
+    $("#zag_cal_k").html(sessionStorage.getItem("zagolovok"));
+	
+	//обнуляем: очищаем таблицу, поле, проверочную дату, гасим лампочку
+	        correct_date="";
+			
+           document.getElementById('month_k').selectedIndex=0;	      
+		  $('#lamp_reaction').attr("src","calendar/control/pict/lamp_no.png");
+ 
+           $("#input_date_k").val("");
+ 
+           $('#table_kalendar_k').html("");
+	
+	
+	
+	  /********************************Отрисовка календаря режим Контроль*******************************************/
+
+        $('#month_k').change( function ( ){
+ 
+           var b="";
+           var check_begin= 1;
+           var check_end= document.getElementById("month_k").value;
+           var tdc=1;
+ 
+ 
+           $('#lamp_reaction').attr("src","calendar/control/pict/lamp_no.png");
+ 
+           $("#input_date_k").val("");
+ 
+           $('#table_kalendar_k').html("");
+  
+  
+  
+           do {
+             b+="<tr>";
+ 
+             for(i=0;i<7;i++)
+             {
+               if(check_begin<=check_end)
+               {
+                b+="<td id="+tdc+"day onclick='change_color_k(this);' style='background-color:#a8bbb0;'>"+check_begin+"</td>";
+                tdc++;
+                check_begin++;
+               }
+               else {b+="<td></td>";}
+   
+             }  
+ 
+             b+="</tr>";
+            } while (check_begin<=check_end)
+ 
+
+
+         $('#table_kalendar_k').append(b);
+  
+  
+        });
+
+/***************************конец Отрисовка календаря****************************************************************/
+	
+/****************************************выводим произвольную дату(месяц, день)***********************/
+//$('#button_vibros_date').mousedown( function ( ){
+
+$(document).off('vmousedown', '#button_vibros_date').on('vmousedown', '#button_vibros_date',function(e) {
+
+$(this).attr("src","calendar/control/pict/button_press.png");
+//получаем случайный месяц
+do {
+var n_month=Math.random()*11;
+console.log(n_month);
+} while (Math.floor(n_month)==0)
+
+console.log(n_month);
+//выбираем этот месяц в ниспадающем списке
+document.getElementById('month_k').selectedIndex=n_month;
+
+//инициируем событие onchange
+$('#month_k').trigger('change');
+//document.getElementById('month').change();
+
+//получаем случайный день месяца
+var day_month=Math.random()*(Number(document.getElementById("month_k").value)-1)+1;
+//инициируем событие click
+console.log(Math.floor(day_month));
+$('#'+Math.floor(day_month)+'day').trigger('click');
+
+$('#lamp_reaction').attr("src","calendar/control/pict/lamp_no.png");
+
+});
+
+/***********************************конец выводим произвольную дату********************************/
+
+	
+	//возвращаем кнопку Сгенерировать дату в изначальное состаяние по событию mouseup
+ 
+ $(document).off('vmouseup', '#button_vibros_date').on('vmouseup', '#button_vibros_date',function(e) {
+ $(this).attr("src","calendar/control/pict/button_no_press.png");
+ });
+ 
+  
+	
+	//возвращаем кнопку Проверить в изначальное состаяние по событию mouseup
+	
+  $(document).off('vmouseup', '#check_button').on('vmouseup', '#check_button',function(e) {
+  $(this).attr("src","calendar/control/pict/check.png");
+  });
+	
+	
+
+   	
+	
+   
+   
+   });
+   
+   
+   //***************************Обработка с показом презентации***********************************************
+      $(document).on('pagebeforeshow', "#present",function () {
+           
+		   $("#zag").html(sessionStorage.getItem("zagolovok"));
+		   show_present(sessionStorage.getItem("papka"),sessionStorage.getItem("howmany"));
+	       var numb_of_pict=0;//номер картинки в презентации, которую показывать
+		   $("#page_pres").attr("src","presentations/"+sessionStorage.getItem("papka")+pict_of_present[numb_of_pict]);
+		   
+		   $("#back").attr("src","pict/back.png");
+			$("#frw").attr("src","pict/forw.png");
+		   
+        //***************************на стрелку назад (back)*****************************************   
+		    $(document).off('click', '#back').on('click', '#back',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			if(numb_of_pict==0) {
+			numb_of_pict=0;
+			$(this).attr("src","pict/back_gr.gif");
+			$("#frw").attr("src","pict/forw.png");
+			} else {
+			numb_of_pict--
+			$(this).attr("src","pict/back.png");
+			$("#frw").attr("src","pict/forw.png");
+			
+			};
+			
+			$("#page_pres").attr("src","presentations/"+sessionStorage.getItem("papka")+pict_of_present[numb_of_pict]);
+			//SoundMixer.stopAll();
+          /*  clearTimeout(talk_name);
+            if(pos!=0) {pos=pos-1;}
+			if(pos!=0){off_sound(pos+1);}else {off_sound(pos);}
+            show_frukt(pos);		*/	  
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+ 
+       //***************************на стрелку вперед (frw)*****************************************   
+		    $(document).off('click', '#frw').on('click', '#frw',function(e) {
+		  
+		   if(e.handled !== true) // предотвращает срабатываение события клик больше чем 1 раз
+        {
+           // alert('Clicked');
+            e.handled = true;
+			
+			
+			if(numb_of_pict==pict_of_present.length-1) {
+			
+			$(this).attr("src","pict/frw_gr.gif");
+			$("#back").attr("src","pict/back.png");
+			numb_of_pict=pict_of_present.length-1;			
+			
+			} 
+			else {
+			numb_of_pict++;
+			$(this).attr("src","pict/forw.png");
+			$("#back").attr("src","pict/back.png");
+			}
+			
+			$("#page_pres").attr("src","presentations/"+sessionStorage.getItem("papka")+pict_of_present[numb_of_pict]);
+			//SoundMixer.stopAll();
+          /*  clearTimeout(talk_name);
+            if(pos!=0) {pos=pos-1;}
+			if(pos!=0){off_sound(pos+1);}else {off_sound(pos);}
+            show_frukt(pos);		*/	  
+			
+        }
+				  
+        }); 
+	  //**********************************************************************************************
+
+	
+		      
+	
+    
+      });
+  
+  
+  //*****************************************конец показ презентации*****************************************
+  
+  
+   
+  
+  </script>
+  
+  </head>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <body>
+   
+   <!-------------------------------------ОСНОВНАЯ СТРАНИЦА-------------------------------------------------->
+   <div data-role="page" id="main_page" data-theme="a">
+      
+	  <div data-role="header" >
+		<h1 id="twi_acc">Русский язык</h1>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+	  </div>
+	  
+	  <div data-role="content">
+	  	  
+	     <ul data-role="listview" data-inset="true" data-theme="a">
+			
+			<li>
+			<a href="" id=knowatoya><img  src="pict/ot_a_do_ya.png" alt="Знаю всё от А до Я"><img  src="pict/knowatoyaarab.gif" alt="Знаю всё от А до Я"><p>Знаю всё от А до Я</p></a>
+			  <ul style="display:none;" id=menu_knowatoya  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a data-kolvo=3 id=let0 href="#present">А</a></li>
+	            <li><a data-kolvo=5 id=let1 href="#present">Б</a></li>
+	            <li><a data-kolvo=7 id=let2 href="#present">В</a></li>
+				<li><a data-kolvo=9 id=let3 href="#present">Г, Д</a></li>
+				<li><a data-kolvo=5 id=let5 href="#present">Е, Ё</a></li>
+				<li><a data-kolvo=4 id=let7 href="#present">Ж</a></li>
+				<li><a data-kolvo=6 id=let8 href="#present">З</a></li>
+				<li><a data-kolvo=3 id=let9 href="#present">И</a></li>
+				<li><a data-kolvo=7 id=let11 href="#present">К</a></li>
+				<li><a data-kolvo=3 id=let12 href="#present">Л</a></li>
+				<li><a data-kolvo=3 id=let13 href="#present">М</a></li>
+				<li><a data-kolvo=4 id=let14 href="#present">Н</a></li>
+				<li><a data-kolvo=3 id=let15 href="#present">О</a></li>
+				<li><a data-kolvo=4 id=let16 href="#present">П</a></li>
+				<li><a data-kolvo=5 id=let17 href="#present">Р</a></li>
+				<li><a data-kolvo=7 id=let18 href="#present">С</a></li>
+				<li><a data-kolvo=6 id=let19 href="#present">Т</a></li>
+				<li><a data-kolvo=3 id=let20 href="#present">У</a></li>
+				<li><a data-kolvo=7 id=let21 href="#present">Ф</a></li>
+				<li><a data-kolvo=2 id=let22 href="#present">Х</a></li>
+				<li><a data-kolvo=12 id=let23 href="#present">Ц</a></li>
+				<li><a data-kolvo=4 id=let24 href="#present">Ч</a></li>
+				<li><a data-kolvo=2 id=let25 href="#present">Ш</a></li>
+				<li><a data-kolvo=2 id=let26 href="#present">Щ</a></li>
+				<li><a data-kolvo=10 id=let30 href="#present">Э</a></li>
+				<li><a data-kolvo=4 id=let31 href="#present">Ю</a></li>
+				<li><a data-kolvo=3 id=let32 href="#present">Я</a></li>
+	          </ul>
+		    </li>
+			
+			
+			<li>
+			<a href="tests/index.html" rel="external" id=tests><img src="pict/tests.gif" alt="Тесты"><img src="pict/testsarab.gif" alt="Тесты"><p>Тесты</p></a>
+					
+			</li>
+			
+			<li>
+			<a href="" id=calendar><img src="pict/calendar.gif" alt="Интерактивный календарь"><img src="pict/calendararab.gif" alt="Интерактивный календарь"><p>Интерактивный календарь</p></a>			
+			  <ul style="display:none;" id=menu_calendar  data-role="listview" data-inset="true">
+	           <!-- onclick="$('#r1_zag').append('Want to eat');"-->
+				<li><a id=calobuchenie href="#calobuch"><img style="margin-left: 17px;" src="pict/calobuch.gif" alt="Интерактивный календарь - Обучение">Обучение</a></li>
+	            <li><a id=calkontrol href="#calk"><img style="margin-left: 17px;" src="pict/calcontrol.gif" alt="Интерактивный календарь - Контроль">&nbsp;&nbsp;Контроль</a></li>       
+			 </ul>
+			</li>
+			
+			<li>
+			<a href="#present" data-kolvo=45 id=moscow><img src="pict/kremlin.jpg" alt="Я шагаю по Москве"><img src="pict/kremlinarab.gif" alt="Я шагаю по Москве"><p>Я шагаю по Москве</p></a>
+					
+			</li>
+			
+			<li>
+			<a href="interaktiv/index.html" rel="external" id=int><img src="pict/interaktiv.png" alt="Интерактивные задания"><img src="pict/interaktivarab.gif" alt="Интерактивные задания"><p>Интерактивные задания</p></a>
+					
+			</li>
+			
+			
+		</ul>	
+     </div>
+	 
+	 <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+   </div>
+   
+   <!-------------------------------------СТРАНИЦА С ПРЕЗЕНТАЦИЕЙ----------------------------------------------->
+ <div data-role="page" id="present" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><p id=zag></p></h1>
+		<a href="#main_page"  onclick="off_video_back();" data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	 <!--<div id="trailer" class="is_overlay">-->
+    <!--  <p align=center> <video id="video" width="700" height="auto" preload="auto">
+         <source src="presentations/knowatoya/video0.mp4"></source>
+         <source src="presentations/knowatoya/video0.ogg" type="video/ogg"></source>
+        </video></p>-->
+		 <p id=fileNames style="text-align:center;"><img width=500 id=page_pres src=""></p>
+		 
+		<div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img id=back src="pict/back.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  <img id=frw src="pict/forw.png">
+	   </div>
+		
+    <!-- </div>-->
+	   
+	   
+	     
+   
+   
+    </div>
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div>
+   
+  
+
+   <!-------------------------------------СТРАНИЦА  КАЛЕНДАРЬ РЕЖИМ ОБУЧЕНИЕ---------------------------------------->
+ <div data-role="page" id="calobuch" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><p id=zag_cal></p></h1>
+		<a href="#main_page"  data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	<div data-role="fieldcontain"> 
+	
+		<select id=month class=month1>
+		  <option value=0>Выберите месяц</option>
+		  <option value=31>январь</option>
+		  <option value=29>февраль</option>
+		  <option value=31>март</option>
+		  <option value=30>апрель</option>
+		  <option value=31>май</option>
+		  <option value=30>июнь</option>
+		  <option value=31>июль</option>
+		  <option value=31>август</option>
+		  <option value=30>сентябрь</option>
+		  <option value=31>октябрь</option>
+		  <option value=30>ноябрь</option>
+		  <option value=31>декабрь</option>		  
+		  </select>	
+     		  
+	</div>	  
+
+      <table id=table_kalendar align=center class=kalendar></table>
+    
+     	 
+	 <div data-role="fieldcontain" >					
+       <input class="ui-overlay-shadow" data-icon="edit" type="text" name="input_date" id="input_date" value=""/>   
+	 </div>
+	 
+   
+   </div>
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div>  
+   
+   
+   <!-------------------------------------СТРАНИЦА  КАЛЕНДАРЬ РЕЖИМ КОНТРОЛЬ---------------------------------------->
+ <div data-role="page" id="calk" data-theme="a">
+   
+   <div data-role="header" >
+		<h1 id="twi_acc"><p id=zag_cal_k></p></h1>
+		<a href="#main_page"  data-icon="arrow-l" class="ui-btn-left">Назад</a>
+		<a href="#settings" data-icon="info" class="ui-btn-right">О приложении</a>
+   </div>
+   
+   <div data-role="content">
+     
+	<div data-role="fieldcontain"> 
+	
+		<select id=month_k class=month1>
+		  <option value=0>Выберите месяц</option>
+		  <option value=31>январь</option>
+		  <option value=29>февраль</option>
+		  <option value=31>март</option>
+		  <option value=30>апрель</option>
+		  <option value=31>май</option>
+		  <option value=30>июнь</option>
+		  <option value=31>июль</option>
+		  <option value=31>август</option>
+		  <option value=30>сентябрь</option>
+		  <option value=31>октябрь</option>
+		  <option value=30>ноябрь</option>
+		  <option value=31>декабрь</option>		  
+		  </select>	
+     		  
+	</div>	  
+
+      <table id=table_kalendar_k align=center class=kalendar></table>
+    
+      <p align=center><img id="lamp_reaction" width=50 src="calendar/control/pict/lamp_no.png"></p> 
+	 <div data-role="fieldcontain" >     	 
+       <input class="ui-overlay-shadow" data-icon="edit" type="text" name="input_date_k" id="input_date_k" value=""/>
+	 </div>
+	 
+	 <div data-role="controlgroup" data-type="horizontal" style="text-align:center;">
+	      <img id="button_vibros_date" width=230 src="calendar/control/pict/button_no_press.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  <img width=148 onmousedown="Checking()" src="calendar/control/pict/check.png" id="check_button">
+	   </div> 
+	 
+   
+   </div>
+   
+    <div data-role="footer">
+	РГГУ, 2018
+	</div>
+	
+ </div> 
+   
+    
+   
+  </body>
+</html>
